@@ -7,6 +7,7 @@ export const Process: React.FC = () => {
   const trackRef = useRef<HTMLDivElement>(null);
   const currentX = useRef(0);
   const targetX = useRef(0);
+  const lastTimeRef = useRef<number>(0);
   const rafId = useRef<number | null>(null);
 
   const steps = [
@@ -25,21 +26,34 @@ export const Process: React.FC = () => {
     let isVisible = false;
     let isAnimating = false;
 
-    const animate = () => {
+    const animate = (time: number) => {
       if (!isVisible) {
         isAnimating = false;
+        lastTimeRef.current = 0;
         return;
       }
+
+      if (!lastTimeRef.current) lastTimeRef.current = time;
+      const deltaTime = (time - lastTimeRef.current) / 1000;
+      lastTimeRef.current = time;
       
-      // Плавная интерполяция к целевой позиции
+      // Плавная интерполяция к целевой позиции с учетом времени кадра (экспоненциальное сглаживание)
+      const smoothFactor = 1 - Math.exp(-8 * Math.min(deltaTime, 0.1));
+      currentX.current = lerp(currentX.current, targetX.current, smoothFactor);
+      
+      if (trackRef.current) {
+        trackRef.current.style.transform = `translate3d(${-currentX.current}px, 0, 0)`;
+      }
+
       const diff = Math.abs(currentX.current - targetX.current);
-      
-      if (diff > 0.5) {
-        currentX.current = lerp(currentX.current, targetX.current, 0.1);
-        
+      if (diff < 0.1) {
+        currentX.current = targetX.current;
         if (trackRef.current) {
           trackRef.current.style.transform = `translate3d(${-currentX.current}px, 0, 0)`;
         }
+        isAnimating = false;
+        lastTimeRef.current = 0;
+        return;
       }
       
       rafId.current = requestAnimationFrame(animate);
@@ -48,6 +62,7 @@ export const Process: React.FC = () => {
     const startAnimation = () => {
       if (!isAnimating && isVisible) {
         isAnimating = true;
+        lastTimeRef.current = 0;
         rafId.current = requestAnimationFrame(animate);
       }
     };
