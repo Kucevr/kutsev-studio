@@ -89,7 +89,7 @@ export const Services: React.FC = () => {
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div>
-            <h2 className="text-fluid-huge font-display font-bold tracking-tighter text-white mb-6">
+            <h2 className="text-5xl md:text-fluid-huge font-display font-bold tracking-tighter text-white mb-6">
               <TextReveal>{t('services.title')}</TextReveal>
             </h2>
             <div className="h-px w-full md:w-[600px] bg-linear-to-r from-white/30 to-transparent"></div>

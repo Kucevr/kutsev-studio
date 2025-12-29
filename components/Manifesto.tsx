@@ -121,7 +121,7 @@ const PrincipleItem: React.FC<{
           />
         </div>
 
-        <h3 className="text-[11vw] md:text-[10vw] font-display font-black leading-[0.8] tracking-tighter uppercase cursor-default select-none relative">
+        <h3 className="text-[9vw] md:text-[10vw] font-display font-black leading-[0.8] tracking-tighter uppercase cursor-default select-none relative">
           <SplitText text={item.title} progress={localProgress} />
         </h3>
       </div>
@@ -329,7 +329,7 @@ export const Manifesto: React.FC = () => {
             <span className="text-brand-accent font-mono text-xs uppercase tracking-[0.3em] mb-4 block">
               {t('manifesto.subtitle')}
             </span>
-            <h2 className="text-fluid-huge font-display font-bold tracking-tighter uppercase leading-[0.8]">
+            <h2 className="text-4xl md:text-fluid-huge font-display font-bold tracking-tighter uppercase leading-[0.8]">
               <TextReveal>{t('manifesto.title')}</TextReveal>
             </h2>
           </div>

@@ -168,7 +168,7 @@ function App() {
           onClose={() => setIsAllProjectsOpen(false)}
           onProjectSelect={(project) => {
             setSelectedProject(project);
-            setIsAllProjectsOpen(false);
+            // Keep archive open in background or handle state to return to it
           }}
         />
         

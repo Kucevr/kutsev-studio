@@ -45,17 +45,17 @@ export const Footer: React.FC<FooterProps> = ({ onContactClick }) => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row justify-between items-start gap-12 mb-32">
           <div className="max-w-2xl">
-            <h2 className="text-fluid-large font-display font-bold leading-[0.9] tracking-tighter mb-8">
+            <h2 className="text-4xl md:text-fluid-large font-display font-bold leading-[0.9] tracking-tighter mb-8">
               <TextReveal>{t('footer.idea')}</TextReveal>
               <span className="text-gray-500">
                 <TextReveal delay={300}>{t('footer.tellUs')}</TextReveal>
               </span>
             </h2>
-            <div className="flex flex-col sm:flex-row gap-6">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                 <Magnetic strength={0.4}>
                   <button 
                     onClick={onContactClick}
-                    className="group relative w-full sm:w-auto px-8 py-4 bg-white text-black rounded-full font-bold text-lg overflow-hidden transition-all hover:scale-105 flex items-center gap-3"
+                    className="group relative w-full sm:w-auto px-8 py-4 bg-white text-black rounded-full font-bold text-base md:text-lg overflow-hidden transition-all hover:scale-105 flex items-center justify-center gap-3"
                   >
                     <div className="absolute inset-0 bg-brand-accent translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
                     <span className="relative z-10 group-hover:text-white transition-colors duration-300 flex items-center gap-2">
@@ -66,7 +66,7 @@ export const Footer: React.FC<FooterProps> = ({ onContactClick }) => {
                 <Magnetic strength={0.3}>
                   <a 
                     href="mailto:hello@kutsev.studio"
-                    className="w-full sm:w-auto px-8 py-4 border border-white/20 rounded-full font-bold text-lg text-white hover:bg-white hover:text-black transition-all duration-300 inline-block text-center break-all"
+                    className="w-full sm:w-auto px-8 py-4 border border-white/20 rounded-full font-bold text-sm md:text-lg text-white hover:bg-white hover:text-black transition-all duration-300 inline-block text-center break-all"
                   >
                     hello@kutsev.studio
                   </a>
@@ -111,7 +111,7 @@ export const Footer: React.FC<FooterProps> = ({ onContactClick }) => {
            <h1 className="hidden sm:block text-[20vw] leading-[0.75] font-display font-bold text-center tracking-tighter select-none text-transparent bg-clip-text bg-linear-to-b from-white/80 to-white/20 pointer-events-none">
              KUTSEV
            </h1>
-           <h1 className="block sm:hidden text-[28vw] leading-[0.85] font-display font-bold text-center tracking-tighter select-none text-transparent bg-clip-text bg-linear-to-b from-white/70 to-white/15 pointer-events-none">
+           <h1 className="block sm:hidden text-[18vw] leading-[0.85] font-display font-bold text-center tracking-tighter select-none text-transparent bg-clip-text bg-linear-to-b from-white/70 to-white/15 pointer-events-none">
              KUTSEV
            </h1>
            <div className="flex flex-col md:flex-row justify-between items-center md:items-start text-center md:text-left text-xs text-gray-500 font-mono mt-4 uppercase tracking-widest gap-4 md:gap-0">

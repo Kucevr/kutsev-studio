@@ -17,36 +17,7 @@ interface ProjectDetailProps {
 export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose, onNext, onPrev }) => {
   const { t } = useLanguage();
   const [mounted, setMounted] = useState(false);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
   
-  // Swipe Distance Threshold
-  const minSwipeDistance = 50;
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe && onNext) {
-      onNext();
-    }
-    if (isRightSwipe && onPrev) {
-      onPrev();
-    }
-  };
-
   const handleClose = () => {
     triggerHaptic(5);
     onClose();
@@ -87,9 +58,6 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose, 
       />
       <div 
         id="project-detail-container"
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
         onClick={(e) => {
           if (e.target === e.currentTarget) handleClose();
         }}

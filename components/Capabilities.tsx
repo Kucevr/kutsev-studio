@@ -20,7 +20,7 @@ export const Capabilities: React.FC = () => {
       <div className="container mx-auto px-6">
         <div className="flex flex-col lg:flex-row gap-12 mb-20">
             <div className="flex-1">
-              <h2 className="text-fluid-large font-display font-bold leading-[0.9] md:leading-tight">
+              <h2 className="text-5xl md:text-fluid-large font-display font-bold leading-[0.9] md:leading-tight">
                 <div className="mb-2">{t('capabilities.headline_1')}</div>
                 <div className="text-brand-accent">
                    <TextReveal>{t('capabilities.headline_2')}</TextReveal>

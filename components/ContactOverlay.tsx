@@ -88,33 +88,33 @@ export const ContactOverlay: React.FC<ContactOverlayProps> = ({ isOpen, onClose 
       />
 
       <div className="relative w-full h-full md:w-[95%] md:h-[95%] bg-[#0a0a0a] md:rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row animate-fade-in-up border border-white/5">
-        <Magnetic strength={0.3} className="absolute top-6 right-6 z-30">
+        <Magnetic strength={0.3} className="absolute top-4 right-4 md:top-6 md:right-6 z-40">
           <button 
             onClick={onClose}
             aria-label="Close Contact Form"
-            className="w-12 h-12 bg-white/5 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 border border-white/10"
+            className="w-10 h-10 md:w-12 md:h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 border border-white/10"
           >
-            <X size={24} />
+            <X size={20} />
           </button>
         </Magnetic>
 
-        <div className="w-full md:w-[35%] bg-brand-accent/10 p-10 md:p-16 text-white flex flex-col justify-between relative overflow-hidden border-r border-white/5">
+        <div className="w-full md:w-[35%] bg-brand-accent/10 p-8 md:p-16 text-white flex flex-col justify-between relative overflow-hidden border-b md:border-b-0 md:border-r border-white/5 shrink-0">
            <div className="absolute inset-0 bg-noise opacity-20 pointer-events-none"></div>
            <div className="absolute top-0 right-0 w-80 h-80 bg-brand-accent/20 rounded-full blur-[100px] -mr-20 -mt-20 pointer-events-none animate-pulse-slow"></div>
            
            <div className="relative z-10">
-             <div className="inline-block px-3 py-1 border border-white/20 rounded-full text-xs font-bold uppercase tracking-widest mb-8">
+             <div className="inline-block px-3 py-1 border border-white/20 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4 md:mb-8">
                {t('contact.startJourney')}
              </div>
-             <h2 className="text-3xl md:text-5xl font-display font-bold leading-[0.9] mb-8">
+             <h2 className="text-2xl md:text-5xl font-display font-bold leading-[0.9] mb-4 md:mb-8">
                {t('contact.buildFuture')}
              </h2>
-             <p className="text-white/70 font-light text-lg max-w-xs leading-relaxed">
+             <p className="text-white/70 font-light text-sm md:text-lg max-w-xs leading-relaxed">
                {t('contact.desc')}
              </p>
            </div>
 
-           <div className="space-y-8 mt-12 md:mt-0 relative z-10">
+           <div className="hidden md:block space-y-8 relative z-10">
              <div>
                <h4 className="text-sm font-bold uppercase tracking-widest opacity-50 mb-2">{t('contact.contacts')}</h4>
                <a href="mailto:hello@kutsev.studio" className="text-xl font-display hover:text-brand-accent transition-colors block">hello@kutsev.studio</a>
@@ -127,13 +127,13 @@ export const ContactOverlay: React.FC<ContactOverlayProps> = ({ isOpen, onClose 
            </div>
         </div>
 
-        <div className="w-full md:w-[65%] relative bg-[#050505]">
+        <div className="w-full md:w-[65%] relative bg-[#050505] flex-grow overflow-hidden">
           <div className="absolute inset-0 bg-noise opacity-5 pointer-events-none"></div>
           
-          <div className="relative h-full overflow-y-auto p-8 md:p-24 custom-scrollbar flex flex-col">
+          <div className="relative h-full overflow-y-auto p-6 md:p-24 custom-scrollbar flex flex-col">
             
             {!isSubmitted ? (
-              <form className="max-w-2xl mx-auto space-y-12 w-full" onSubmit={handleSubmit}>
+              <form className="max-w-2xl mx-auto space-y-8 md:space-y-12 w-full" onSubmit={handleSubmit}>
                 <div className="animate-fade-in-up" style={{ animationDelay: '100ms' }}>
                   <InputField 
                     label={t('contact.form.name')} 
@@ -152,14 +152,14 @@ export const ContactOverlay: React.FC<ContactOverlayProps> = ({ isOpen, onClose 
                   />
                 </div>
                 <div className="animate-fade-in-up" style={{ animationDelay: '300ms' }}>
-                  <label className="text-sm font-mono text-gray-400 uppercase tracking-wider block mb-4">{t('contact.form.budget')}</label>
-                  <div className="flex flex-wrap gap-4">
+                  <label className="text-[10px] md:text-sm font-mono text-gray-400 uppercase tracking-wider block mb-4">{t('contact.form.budget')}</label>
+                  <div className="flex flex-wrap gap-2 md:gap-4">
                     {['< 1000 BYN', '1000 - 3000 BYN', '3000 - 7000 BYN', '> 7000 BYN'].map((opt) => (
                       <button
                         key={opt}
                         type="button"
                         onClick={() => setFormState({...formState, budget: opt})}
-                        className={`px-6 py-3 rounded-full border transition-all duration-300 ${
+                        className={`px-4 py-2 md:px-6 md:py-3 rounded-full border text-xs md:text-base transition-all duration-300 ${
                           formState.budget === opt 
                             ? 'bg-white text-black border-white scale-105 shadow-lg shadow-white/10' 
                             : 'border-white/10 text-gray-500 hover:border-white/40 hover:text-white'
@@ -179,12 +179,12 @@ export const ContactOverlay: React.FC<ContactOverlayProps> = ({ isOpen, onClose 
                     onChange={(e: any) => setFormState({...formState, message: e.target.value})}
                   />
                 </div>
-                <div className="pt-8 animate-fade-in-up" style={{ animationDelay: '500ms' }}>
-                  <Magnetic strength={0.4} className="inline-block">
+                <div className="pt-4 md:pt-8 animate-fade-in-up" style={{ animationDelay: '500ms' }}>
+                  <Magnetic strength={0.4} className="inline-block w-full md:w-auto">
                     <button 
                       type="submit"
                       disabled={isSending}
-                      className="group relative px-12 py-6 bg-white text-black rounded-full font-bold text-xl overflow-hidden transition-all hover:scale-105 flex items-center gap-4 disabled:opacity-70 disabled:cursor-not-allowed"
+                      className="group relative w-full md:w-auto px-10 py-5 md:px-12 md:py-6 bg-white text-black rounded-full font-bold text-lg md:text-xl overflow-hidden transition-all hover:scale-105 flex items-center justify-center gap-4 disabled:opacity-70 disabled:cursor-not-allowed"
                     >
                         <div className="absolute inset-0 bg-brand-accent translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
                         <span className="relative z-10 group-hover:text-white transition-colors duration-300 flex items-center gap-3">
