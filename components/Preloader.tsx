@@ -22,11 +22,11 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
           setTimeout(() => {
             setIsExiting(true);
             // Instant exit on mobile
-            setTimeout(onComplete, isMobile ? 100 : 800);
+            setTimeout(onComplete, isMobile ? 50 : 800);
           }, 0);
           return 100;
         }
-        return prev + Math.floor(Math.random() * 15) + 1; 
+        return prev + Math.floor(Math.random() * 25) + 5; 
       });
     }, interval);
     return () => clearInterval(timer);

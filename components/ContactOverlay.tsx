@@ -77,34 +77,25 @@ export const ContactOverlay: React.FC<ContactOverlayProps> = ({ isOpen, onClose 
     }, 1500);
   };
 
+  const handleClose = () => {
+    onClose();
+  };
+
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-auto">
       <div 
         className="absolute inset-0 bg-brand-black transition-opacity duration-500" 
-        onClick={onClose}
+        onClick={handleClose}
       />
 
       <div className="relative w-full h-full md:w-[95%] md:h-[95%] bg-[#0a0a0a] md:rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row animate-fade-in-up border border-white/5">
         <div className="absolute top-4 right-4 md:top-6 md:right-6 z-40">
           <button 
-            onPointerDown={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              requestAnimationFrame(() => {
-                onClose();
-              });
-            }}
-            onTouchStart={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              requestAnimationFrame(() => {
-                onClose();
-              });
-            }}
+            onClick={handleClose}
             aria-label="Close Contact Form"
-            className="w-10 h-10 md:w-12 md:h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white hover:text-black md:transition-all md:duration-300 border border-white/10 touch-none outline-none active:scale-90 transition-transform will-change-transform"
+            className="w-10 h-10 md:w-12 md:h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white hover:text-black md:transition-all md:duration-300 border border-white/10 touch-none outline-none active:scale-90 transition-transform"
           >
             <X size={20} />
           </button>
@@ -112,7 +103,7 @@ export const ContactOverlay: React.FC<ContactOverlayProps> = ({ isOpen, onClose 
 
         <div className="w-full md:w-[35%] bg-brand-accent/10 p-8 md:p-16 text-white flex flex-col justify-between relative overflow-hidden border-b md:border-b-0 md:border-r border-white/5 shrink-0">
            <div className="absolute inset-0 bg-noise opacity-0 md:opacity-20 pointer-events-none"></div>
-           <div className="hidden md:block absolute top-0 right-0 w-80 h-80 bg-brand-accent/20 rounded-full blur-[100px] -mr-20 -mt-20 pointer-events-none animate-pulse-slow"></div>
+           <div className="absolute top-0 right-0 w-80 h-80 bg-brand-accent/20 rounded-full blur-[100px] -mr-20 -mt-20 pointer-events-none animate-pulse-slow"></div>
            
            <div className="relative z-10">
              <div className="inline-block px-3 py-1 border border-white/20 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4 md:mb-8">

@@ -141,7 +141,7 @@ function App() {
             onContactClick={() => setIsContactOpen(true)} 
           />
           
-          <div className={`transition-all duration-700 ${isModalOpen ? 'pointer-events-none select-none opacity-20 md:blur-md md:grayscale' : 'opacity-100 blur-0 grayscale-0'}`}>
+          <div className={`transition-all duration-700 ${isModalOpen ? 'pointer-events-none select-none opacity-20 md:blur-md md:grayscale' : 'opacity-100'}`}>
             <main>
               <Hero onContactClick={() => setIsContactOpen(true)} />
               <DesignCanvas onOpenAllProjects={() => setIsAllProjectsOpen(true)} />
