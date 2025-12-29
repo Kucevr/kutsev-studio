@@ -12,27 +12,33 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   const [isExiting, setIsExiting] = useState(false);
 
   useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+    // Faster progress on mobile to exit preloader quicker
+    const interval = isMobile ? 60 : 100;
+    
     const timer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer);
           setTimeout(() => {
             setIsExiting(true);
-            setTimeout(onComplete, 800);
-          }, 200);
+            // Faster exit animation on mobile
+            setTimeout(onComplete, isMobile ? 300 : 800);
+          }, 50);
           return 100;
         }
-        return prev + Math.floor(Math.random() * 10) + 1; 
+        return prev + Math.floor(Math.random() * 12) + 1; 
       });
-    }, 100);
+    }, interval);
     return () => clearInterval(timer);
   }, [onComplete]);
 
   if (progress > 100 && !isExiting) return null;
 
+  const isMobile = window.innerWidth < 768;
   return (
     <div 
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-between bg-brand-black text-white px-8 py-12 transition-transform duration-[800ms] cubic-bezier(0.76, 0, 0.24, 1) will-change-transform ${
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-between bg-brand-black text-white px-8 py-12 transition-transform ${isMobile ? 'duration-[300ms]' : 'duration-[800ms]'} cubic-bezier(0.76, 0, 0.24, 1) will-change-transform ${
         isExiting ? '-translate-y-full' : 'translate-y-0'
       }`}
     >

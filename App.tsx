@@ -78,11 +78,11 @@ function App() {
   useEffect(() => {
     if (!loading) {
       // Progressive rendering: render Hero first, then the rest
-      // Longer delay on mobile to ensure Hero is interactive first
+      // Much longer delay on mobile to ensure Hero is fully interactive
       const isMobile = window.innerWidth < 768;
       const restTimer = setTimeout(() => {
         setRenderRest(true);
-      }, isMobile ? 800 : 100);
+      }, isMobile ? 2500 : 100);
 
       const kickstart = () => {
         // Only do aggressive kickstart on desktop
@@ -140,8 +140,8 @@ function App() {
   return (
     <div className="min-h-screen bg-brand-black text-white selection:bg-brand-accent selection:text-white relative">
       <SchemaMarkup />
-      <CustomCursor />
-      <ScrollProgress />
+      {window.innerWidth >= 768 && <CustomCursor />}
+      {window.innerWidth >= 768 && <ScrollProgress />}
       <div className="bg-noise"></div>
       
       {loading && <Preloader onComplete={() => setLoading(false)} />}

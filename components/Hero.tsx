@@ -152,7 +152,7 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
 
              <div className="relative">
                <button 
-                 className="relative w-24 h-24 md:w-32 md:h-32 flex items-center justify-center cursor-pointer group backdrop-blur-md rounded-full border border-white/10 bg-white/5 touch-none outline-none active:scale-95 transition-transform"
+                 className="relative w-24 h-24 md:w-32 md:h-32 flex items-center justify-center cursor-pointer group backdrop-blur-md rounded-full border border-white/10 bg-white/5 touch-none outline-none active:scale-95 transition-transform will-change-transform"
                  onPointerDown={(e) => {
                    e.stopPropagation();
                    onContactClick();
