@@ -90,9 +90,12 @@ export const ContactOverlay: React.FC<ContactOverlayProps> = ({ isOpen, onClose 
       <div className="relative w-full h-full md:w-[95%] md:h-[95%] bg-[#0a0a0a] md:rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row animate-fade-in-up border border-white/5">
         <Magnetic strength={0.3} className="absolute top-4 right-4 md:top-6 md:right-6 z-40">
           <button 
-            onClick={onClose}
+            onPointerDown={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
             aria-label="Close Contact Form"
-            className="w-10 h-10 md:w-12 md:h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 border border-white/10"
+            className="w-10 h-10 md:w-12 md:h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 border border-white/10 touch-none"
           >
             <X size={20} />
           </button>

@@ -12,12 +12,12 @@ export const Magnetic: React.FC<MagneticProps> = ({ children, strength = 0.5, cl
   const ref = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
 
-  const handleClick = useCallback(() => {
-    triggerHaptic(5); // Light haptic on click
+  const handlePointerDown = useCallback(() => {
+    triggerHaptic(5); // Light haptic on touch/click
   }, []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!ref.current) return;
+    if (!ref.current || window.innerWidth < 768) return; // Disable magnetic on mobile for better performance
     
     if (rafRef.current) {
       cancelAnimationFrame(rafRef.current);
@@ -49,7 +49,7 @@ export const Magnetic: React.FC<MagneticProps> = ({ children, strength = 0.5, cl
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={reset}
-      onClick={handleClick}
+      onPointerDown={handlePointerDown}
       data-magnetic="true"
       className={`inline-block transition-transform duration-200 ease-out will-change-transform ${className}`}
     >
