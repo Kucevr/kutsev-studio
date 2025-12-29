@@ -23,8 +23,8 @@ const CanvasItem: React.FC<{
     className="will-change-transform flex items-center justify-center backface-hidden perspective-1000 group"
     style={{
       ...style,
-      width: isMobile ? 'clamp(160px, 80vw, 300px)' : 'clamp(240px, 28vw, 440px)',
-      height: isMobile ? 'clamp(140px, 60vw, 260px)' : 'clamp(200px, 26vh, 360px)',
+      width: isMobile ? 'clamp(160px, 85vw, 340px)' : 'clamp(240px, 28vw, 440px)',
+      height: isMobile ? 'clamp(120px, 22vh, 200px)' : 'clamp(200px, 26vh, 360px)',
     }}
   >
     <div 
@@ -272,14 +272,14 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects })
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)] z-10" />
 
         {isMobile ? (
-          // Mobile: Horizontal row of 3 works
+          // Mobile: Vertical column of 3 works
           <div 
             ref={containerRef}
-            className="flex flex-row w-screen items-center justify-start gap-4 px-6 overflow-x-auto snap-x snap-mandatory no-scrollbar will-change-transform z-20"
-            style={{ transform: 'translate3d(0,0,0)', padding: '20px 0' }}
+            className="flex flex-col w-full items-center justify-center gap-4 px-4 z-20"
+            style={{ transform: 'translate3d(0,0,0)' }}
           >
             {/* Center item + first 2 from gridImages = 3 items total */}
-            <div ref={el => { itemsRef.current[0] = el; }} className="min-w-[85vw] flex items-center justify-center snap-center">
+            <div ref={el => { itemsRef.current[0] = el; }} className="w-full flex items-center justify-center">
               <CanvasItem 
                 src={photo('nyc-atmosphere.avif')} 
                 title="KUTSEV STUDIO" 
@@ -288,7 +288,7 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects })
               />
             </div>
             {gridImages.slice(0, 2).map((img, i) => (
-              <div key={i} ref={el => { itemsRef.current[i + 1] = el; }} className="min-w-[85vw] flex items-center justify-center snap-center">
+              <div key={i} ref={el => { itemsRef.current[i + 1] = el; }} className="w-full flex items-center justify-center">
                 <CanvasItem 
                   src={img.src} 
                   title={img.title} 
@@ -297,15 +297,15 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects })
               </div>
             ))}
             
-            {/* Archive button positioned after items on mobile */}
-            <div className="min-w-[60vw] flex flex-col items-center justify-center gap-6 snap-center">
+            {/* Archive button at the bottom */}
+            <div className="mt-4 flex justify-center w-full">
               {onOpenAllProjects && (
                 <button 
                   onClick={onOpenAllProjects}
-                  className="group flex items-center gap-3 px-6 py-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white hover:text-black transition-all duration-500 transform hover:scale-105 active:scale-95"
+                  className="group flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white hover:bg-white hover:text-black transition-all duration-500 transform active:scale-95"
                 >
                   <span className="text-xs font-bold uppercase tracking-widest">{t('showcase.archiveTitle')}</span>
-                  <Maximize2 size={16} className="group-hover:rotate-90 transition-transform duration-500" />
+                  <Maximize2 size={18} className="group-hover:rotate-90 transition-transform duration-500" />
                 </button>
               )}
             </div>
