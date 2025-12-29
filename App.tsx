@@ -28,7 +28,6 @@ function App() {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isAllProjectsOpen, setIsAllProjectsOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(null);
-  const [renderRest, setRenderRest] = useState(false);
 
   const isModalOpen = !!selectedProject || isContactOpen || isAllProjectsOpen;
 
@@ -77,15 +76,9 @@ function App() {
   // Kickstart animations and browser rendering after loading
   useEffect(() => {
     if (!loading) {
-      // Progressive rendering: render Hero first, then the rest
-      // Extreme delay on mobile to ensure full interactivity before heavy rendering
       const isMobile = window.innerWidth < 768;
-      const restTimer = setTimeout(() => {
-        setRenderRest(true);
-      }, isMobile ? 4000 : 100);
 
       const kickstart = () => {
-        // Only do aggressive kickstart on desktop
         if (!isMobile) {
           document.body.style.transform = 'translateZ(0)';
           window.scrollTo(0, 1);
@@ -108,16 +101,12 @@ function App() {
             document.body.style.transform = '';
           }, 50);
         } else {
-          // On mobile, just trigger a resize to fix layout
           window.dispatchEvent(new Event('resize'));
         }
       };
       
       const timer = setTimeout(kickstart, 150);
-      return () => {
-        clearTimeout(timer);
-        clearTimeout(restTimer);
-      };
+      return () => clearTimeout(timer);
     }
   }, [loading]);
 
@@ -155,23 +144,19 @@ function App() {
           <div className={`transition-all duration-700 ${isModalOpen ? 'pointer-events-none select-none opacity-20 md:blur-md md:grayscale' : 'opacity-100 blur-0 grayscale-0'}`}>
             <main>
               <Hero onContactClick={() => setIsContactOpen(true)} />
-              {renderRest && (
-                <>
-                  <DesignCanvas onOpenAllProjects={() => setIsAllProjectsOpen(true)} />
-                  <Services />
-                  <Capabilities />
-                  <Showcase 
-                    onProjectClick={setSelectedProject} 
-                    onOpenAllProjects={() => setIsAllProjectsOpen(true)}
-                  />
-                  <Process />
-                  <Pricing onContactClick={() => setIsContactOpen(true)} />
-                  <Manifesto />
-                </>
-              )}
+              <DesignCanvas onOpenAllProjects={() => setIsAllProjectsOpen(true)} />
+              <Services />
+              <Capabilities />
+              <Showcase 
+                onProjectClick={setSelectedProject} 
+                onOpenAllProjects={() => setIsAllProjectsOpen(true)}
+              />
+              <Process />
+              <Pricing onContactClick={() => setIsContactOpen(true)} />
+              <Manifesto />
             </main>
             
-            {renderRest && <Footer onContactClick={() => setIsContactOpen(true)} />}
+            <Footer onContactClick={() => setIsContactOpen(true)} />
           </div>
         </>
       )}

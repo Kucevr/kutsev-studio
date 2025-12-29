@@ -15,7 +15,10 @@ const CanvasItem: React.FC<{
   isCenter?: boolean;
   style?: React.CSSProperties;
   depth?: number;
-}> = ({ src, title, isCenter = false, style, depth = 1 }) => (
+}> = ({ src, title, isCenter = false, style, depth = 1 }) => {
+  const isMobile = window.innerWidth < 768;
+  
+  return (
   <div 
     className="will-change-transform flex items-center justify-center backface-hidden perspective-1000 group"
     style={{
@@ -32,7 +35,7 @@ const CanvasItem: React.FC<{
           : 'shadow-lg rounded-lg z-10 hover:z-30 hover:scale-105 border border-white/5 hover:border-white/20'}
       `}
     >
-      <div className={`absolute inset-0 bg-brand-gray/20 ${!isCenter && 'animate-pulse'}`} />
+      <div className={`absolute inset-0 bg-brand-gray/20 ${!isCenter && !isMobile && 'animate-pulse'}`} />
       <img 
         src={src} 
         alt={title} 
@@ -41,14 +44,17 @@ const CanvasItem: React.FC<{
         decoding="async"
         className="relative z-10 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
       />
+      {!isMobile && (
       <div className="absolute inset-0 z-20 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center p-4">
          <span className="text-white text-[10px] font-bold uppercase tracking-[0.2em] border border-white/20 px-3 py-1.5 rounded-full backdrop-blur-md transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
            {title}
          </span>
       </div>
+      )}
     </div>
   </div>
-);
+  );
+};
 
 const gridImages = [
   { src: photo('focusflow.avif'), title: 'Focusflow', depth: 1.2 },
@@ -103,6 +109,12 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects })
     // Detect mobile and low-performance devices
     isMobileRef.current = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
     isLowPerfRef.current = isMobileRef.current || navigator.hardwareConcurrency <= 4;
+    
+    // On mobile, skip expensive animation entirely
+    if (isMobileRef.current) {
+      warmupFramesRef.current = 999; // Skip warmup
+      isVisibleRef.current = true; // Consider visible immediately
+    }
   }, []);
 
   useEffect(() => {

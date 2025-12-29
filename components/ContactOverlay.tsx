@@ -111,8 +111,8 @@ export const ContactOverlay: React.FC<ContactOverlayProps> = ({ isOpen, onClose 
         </div>
 
         <div className="w-full md:w-[35%] bg-brand-accent/10 p-8 md:p-16 text-white flex flex-col justify-between relative overflow-hidden border-b md:border-b-0 md:border-r border-white/5 shrink-0">
-           <div className="absolute inset-0 bg-noise opacity-20 pointer-events-none"></div>
-           <div className="absolute top-0 right-0 w-80 h-80 bg-brand-accent/20 rounded-full blur-[100px] -mr-20 -mt-20 pointer-events-none animate-pulse-slow"></div>
+           <div className="absolute inset-0 bg-noise opacity-0 md:opacity-20 pointer-events-none"></div>
+           <div className="hidden md:block absolute top-0 right-0 w-80 h-80 bg-brand-accent/20 rounded-full blur-[100px] -mr-20 -mt-20 pointer-events-none animate-pulse-slow"></div>
            
            <div className="relative z-10">
              <div className="inline-block px-3 py-1 border border-white/20 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4 md:mb-8">
@@ -140,7 +140,7 @@ export const ContactOverlay: React.FC<ContactOverlayProps> = ({ isOpen, onClose 
         </div>
 
         <div className="w-full md:w-[65%] relative bg-[#050505] flex-grow overflow-hidden">
-          <div className="absolute inset-0 bg-noise opacity-5 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-noise opacity-0 md:opacity-5 pointer-events-none"></div>
           
           <div className="relative h-full overflow-y-auto p-6 md:p-24 custom-scrollbar flex flex-col">
             
@@ -213,9 +213,9 @@ export const ContactOverlay: React.FC<ContactOverlayProps> = ({ isOpen, onClose 
                   {/* Success Checkmark - Simple SVG */}
                   <svg className="w-full h-full" viewBox="0 0 100 100" fill="none">
                     <circle cx="50" cy="50" r="48" stroke="currentColor" strokeWidth="2" className="text-brand-accent opacity-20" />
-                    <path d="M35 50L45 60L70 35" stroke="currentColor" strokeWidth="4" className="text-brand-accent animate-pulse-slow" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M35 50L45 60L70 35" stroke="currentColor" strokeWidth="4" className="text-brand-accent md:animate-pulse-slow" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
-                  <div className="absolute inset-0 bg-brand-accent/10 rounded-full blur-3xl animate-pulse-slow -z-10"></div>
+                  <div className="hidden md:block absolute inset-0 bg-brand-accent/10 rounded-full blur-3xl animate-pulse-slow -z-10"></div>
                 </div>
                 
                 <h3 className="text-5xl md:text-6xl font-display font-bold mb-6">{t('contact.success.title')}</h3>
