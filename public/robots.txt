@@ -1,0 +1,15 @@
+# Robots.txt for Kutsev Studio
+# https://kutsev.studio
+
+User-agent: *
+Allow: /
+
+# Disallow admin/api paths if any
+Disallow: /api/
+Disallow: /_*
+
+# Sitemap location
+Sitemap: https://kutsev.studio/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
