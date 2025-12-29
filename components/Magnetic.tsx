@@ -54,7 +54,7 @@ export const Magnetic: React.FC<MagneticProps> = ({ children, strength = 0.5, cl
 
   if (isMobile) {
     return (
-      <div className={className} onPointerDown={handlePointerDown}>
+      <div className={className}>
         {children}
       </div>
     );

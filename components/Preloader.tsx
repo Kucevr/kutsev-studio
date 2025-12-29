@@ -42,8 +42,8 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       </div>
 
       <div className="relative flex flex-col items-center">
-        {/* Abstract Tech Scanning Animation */}
-        <div className="w-64 h-64 mb-8 opacity-60 mix-blend-screen">
+        {/* Abstract Tech Scanning Animation - Hidden on mobile for faster load */}
+        <div className="w-64 h-64 mb-8 opacity-60 mix-blend-screen hidden md:block">
           <LottieAnimation 
             path="https://lottie.host/54ae0339-714d-4064-bb50-425733c37af0/74v6v6v6v6.json" 
             className="w-full h-full"

@@ -88,7 +88,7 @@ export const ContactOverlay: React.FC<ContactOverlayProps> = ({ isOpen, onClose 
       />
 
       <div className="relative w-full h-full md:w-[95%] md:h-[95%] bg-[#0a0a0a] md:rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row animate-fade-in-up border border-white/5">
-        <Magnetic strength={0.3} className="absolute top-4 right-4 md:top-6 md:right-6 z-40">
+        <div className="absolute top-4 right-4 md:top-6 md:right-6 z-40">
           <button 
             onPointerDown={(e) => {
               e.stopPropagation();
@@ -99,11 +99,11 @@ export const ContactOverlay: React.FC<ContactOverlayProps> = ({ isOpen, onClose 
               onClose();
             }}
             aria-label="Close Contact Form"
-            className="w-10 h-10 md:w-12 md:h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white hover:text-black md:transition-all md:duration-300 border border-white/10 touch-none outline-none"
+            className="w-10 h-10 md:w-12 md:h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white hover:text-black md:transition-all md:duration-300 border border-white/10 touch-none outline-none active:scale-90 transition-transform"
           >
             <X size={20} />
           </button>
-        </Magnetic>
+        </div>
 
         <div className="w-full md:w-[35%] bg-brand-accent/10 p-8 md:p-16 text-white flex flex-col justify-between relative overflow-hidden border-b md:border-b-0 md:border-r border-white/5 shrink-0">
            <div className="absolute inset-0 bg-noise opacity-20 pointer-events-none"></div>

@@ -114,8 +114,8 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
         <div className="absolute top-0 right-0 w-[60vw] h-[60vw] bg-brand-accent/10 blur-[150px] rounded-full mix-blend-screen animate-blob" />
         <div className="absolute bottom-0 left-0 w-[50vw] h-[50vw] bg-brand-purple/10 blur-[150px] rounded-full mix-blend-screen animate-blob animation-delay-2000" />
         
-        {/* Lottie Background Animation - Subtle abstract waves */}
-        <div className="absolute inset-0 opacity-15 mix-blend-screen">
+        {/* Lottie Background Animation - Disabled on mobile for performance */}
+        <div className="absolute inset-0 opacity-15 mix-blend-screen hidden md:block">
           <LottieAnimation 
             path="https://lottie.host/956e280c-05ad-4c29-ab3d-b1231415d288/85v6v6v6v6.json" 
             className="w-full h-full scale-150"
@@ -150,9 +150,9 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
                 <div className="flex-1 h-px bg-white"></div>
              </div>
 
-             <Magnetic strength={0.3}>
+             <div className="relative">
                <button 
-                 className="relative w-24 h-24 md:w-32 md:h-32 flex items-center justify-center cursor-pointer group backdrop-blur-md rounded-full border border-white/10 bg-white/5 touch-none outline-none"
+                 className="relative w-24 h-24 md:w-32 md:h-32 flex items-center justify-center cursor-pointer group backdrop-blur-md rounded-full border border-white/10 bg-white/5 touch-none outline-none active:scale-95 transition-transform"
                  onPointerDown={(e) => {
                    e.stopPropagation();
                    onContactClick();
@@ -175,7 +175,7 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
                     <Play size={14} fill="white" className="ml-0.5" />
                   </div>
                </button>
-             </Magnetic>
+             </div>
           </div>
 
           {/* Adjusted sizing for MASTERY / МАСТЕРСТВО */}

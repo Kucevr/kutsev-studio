@@ -11,6 +11,8 @@ export const CustomCursor = () => {
   const magneticPos = useRef<{ x: number, y: number } | null>(null);
 
   useEffect(() => {
+    if (window.innerWidth < 768) return;
+
     const animate = () => {
       let targetX = mousePos.current.x;
       let targetY = mousePos.current.y;
