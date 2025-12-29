@@ -309,10 +309,10 @@ export const Manifesto: React.FC = () => {
       {/* Floating Particles Layer */}
 
       {/* Noise Overlay */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.03] z-10" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }} />
+      <div className="hidden md:block absolute inset-0 pointer-events-none opacity-[0.03] z-10" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }} />
       
       {/* Background decorative elements with Parallax */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
+      <div className="hidden md:block absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
         <div 
           className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-accent/20 blur-[120px] rounded-full animate-blob" 
           style={{ transform: `translateY(${smoothProgress * 150}px) scale(${1 + smoothProgress * 0.5})` }}

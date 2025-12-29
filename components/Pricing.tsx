@@ -84,7 +84,7 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
 
   return (
     <section className="py-24 md:py-40 bg-brand-black relative overflow-hidden">
-      <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none"></div>
+      <div className="hidden md:block absolute inset-0 bg-noise opacity-[0.03] pointer-events-none"></div>
       
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-4xl mb-20">

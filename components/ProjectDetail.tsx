@@ -75,7 +75,7 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose, 
                 <button 
                   onClick={handleClose}
                   aria-label="Close Project Detail"
-                  className="group flex items-center gap-3 px-4 py-2 bg-black/60 backdrop-blur-xl rounded-full text-white border border-white/10 hover:bg-white hover:text-black transition-all"
+                  className="group flex items-center gap-3 px-4 py-2 bg-black/60 backdrop-blur-md md:backdrop-blur-xl rounded-full text-white border border-white/10 hover:bg-white hover:text-black transition-all"
                 >
                   <X size={20} className="group-hover:rotate-90 transition-transform"/>
                 </button>
@@ -97,7 +97,7 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose, 
               <div className="absolute bottom-0 left-0 p-6 md:p-12 w-full z-10">
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                   <div className="animate-fade-in-up delay-100 max-w-4xl">
-                    <span className="inline-block px-3 py-1 mb-4 border border-brand-accent text-brand-accent rounded-full text-[10px] font-bold uppercase tracking-widest bg-brand-accent/10 backdrop-blur-md">
+                    <span className="inline-block px-3 py-1 mb-4 border border-brand-accent text-brand-accent rounded-full text-[10px] font-bold uppercase tracking-widest bg-brand-accent/10 md:backdrop-blur-md">
                       {t('project.selected')}
                     </span>
                     <h2 className="text-fluid-large font-display font-bold text-white uppercase tracking-tighter leading-[0.85] mb-6 wrap-break-word">

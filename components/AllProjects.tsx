@@ -57,7 +57,7 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ isOpen, onClose, onPro
 
   return (
     <div className={`fixed inset-0 z-60 bg-brand-black transition-all duration-700 ease-[0.16,1,0.3,1] ${isOpen ? 'translate-y-0 opacity-100 pointer-events-auto' : 'translate-y-full opacity-0 pointer-events-none'}`}>
-      <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-6 md:px-12 bg-brand-black/95 backdrop-blur-md border-b border-white/5">
+      <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-6 md:px-12 bg-brand-black/95 md:backdrop-blur-md border-b border-white/5">
          <div className="flex items-center gap-6">
             <h2 className="text-3xl font-display font-bold">{t('showcase.archiveTitle')}</h2>
             <div className="hidden md:flex gap-1 bg-white/5 p-1 rounded-lg">

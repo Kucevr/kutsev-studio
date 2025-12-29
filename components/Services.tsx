@@ -78,10 +78,10 @@ export const Services: React.FC = () => {
     >
       <div 
         ref={spotlightRef}
-        className="absolute w-[800px] h-[800px] bg-brand-accent/5 rounded-full blur-[120px] pointer-events-none will-change-transform"
+        className="hidden md:block absolute w-[800px] h-[800px] bg-brand-accent/5 rounded-full blur-[120px] pointer-events-none will-change-transform"
         style={{ left: 0, top: 0 }}
       />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] pointer-events-none opacity-20">
+      <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] pointer-events-none opacity-20">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-purple rounded-full blur-[128px] animate-blob"></div>
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-accent rounded-full blur-[128px] animate-blob animation-delay-2000"></div>
       </div>

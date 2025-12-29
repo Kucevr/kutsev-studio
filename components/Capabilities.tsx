@@ -37,7 +37,7 @@ export const Capabilities: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/10 border border-white/10">
           {capabilities.map((cap, idx) => (
             <div key={idx} className="group relative bg-brand-black p-8 md:p-10 hover:bg-[#0a0a0a] transition-colors duration-500 overflow-hidden">
-               <div className="absolute top-0 right-0 w-64 h-64 bg-brand-accent/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -mr-16 -mt-16 pointer-events-none"></div>
+               <div className="hidden md:block absolute top-0 right-0 w-64 h-64 bg-brand-accent/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -mr-16 -mt-16 pointer-events-none"></div>
                <div className="relative z-10">
                  <div className="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center text-white mb-6 group-hover:scale-110 group-hover:bg-white group-hover:text-black transition-all duration-300 shadow-lg shadow-black/50">
                     <cap.icon strokeWidth={1.5} size={24} />

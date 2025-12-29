@@ -169,7 +169,7 @@ export const Header: React.FC<HeaderProps> = ({ onContactClick }) => {
 
       {/* Mobile Menu Overlay */}
       <div 
-        className={`fixed inset-0 bg-brand-black/98 backdrop-blur-2xl z-30 flex flex-col transition-all duration-700 ease-expo ${
+        className={`fixed inset-0 bg-brand-black/98 backdrop-blur-md md:backdrop-blur-2xl z-30 flex flex-col transition-all duration-700 ease-expo ${
           mobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         }`}
       >
