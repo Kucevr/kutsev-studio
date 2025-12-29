@@ -174,7 +174,7 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
                   <div className="absolute w-10 h-10 bg-brand-accent rounded-full flex items-center justify-center group-hover:scale-125 transition-transform duration-300 shadow-lg shadow-brand-accent/20">
                     <Play size={14} fill="white" className="ml-0.5" />
                   </div>
-               </div>
+               </button>
              </Magnetic>
           </div>
 
