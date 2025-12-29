@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useLanguage } from '../LanguageContext';
-import { LottieAnimation } from './Animations';
 
 interface PreloaderProps {
   onComplete: () => void;
@@ -13,8 +12,8 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
-    // Faster progress on mobile to exit preloader quicker
-    const interval = isMobile ? 60 : 100;
+    // Super fast progress on mobile to exit preloader as quickly as possible
+    const interval = isMobile ? 40 : 100;
     
     const timer = setInterval(() => {
       setProgress((prev) => {
@@ -22,12 +21,12 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
           clearInterval(timer);
           setTimeout(() => {
             setIsExiting(true);
-            // Faster exit animation on mobile
-            setTimeout(onComplete, isMobile ? 300 : 800);
-          }, 50);
+            // Instant exit on mobile
+            setTimeout(onComplete, isMobile ? 100 : 800);
+          }, 0);
           return 100;
         }
-        return prev + Math.floor(Math.random() * 12) + 1; 
+        return prev + Math.floor(Math.random() * 15) + 1; 
       });
     }, interval);
     return () => clearInterval(timer);
@@ -38,7 +37,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   const isMobile = window.innerWidth < 768;
   return (
     <div 
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-between bg-brand-black text-white px-8 py-12 transition-transform ${isMobile ? 'duration-[300ms]' : 'duration-[800ms]'} cubic-bezier(0.76, 0, 0.24, 1) will-change-transform ${
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-between bg-brand-black text-white px-8 py-12 transition-transform ${isMobile ? 'duration-[100ms]' : 'duration-[800ms]'} cubic-bezier(0.76, 0, 0.24, 1) will-change-transform ${
         isExiting ? '-translate-y-full' : 'translate-y-0'
       }`}
     >
@@ -48,14 +47,6 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       </div>
 
       <div className="relative flex flex-col items-center">
-        {/* Abstract Tech Scanning Animation - Hidden on mobile for faster load */}
-        <div className="w-64 h-64 mb-8 opacity-60 mix-blend-screen hidden md:block">
-          <LottieAnimation 
-            path="https://lottie.host/54ae0339-714d-4064-bb50-425733c37af0/74v6v6v6v6.json" 
-            className="w-full h-full"
-          />
-        </div>
-
         <span className="text-[12vw] md:text-[20vw] font-display font-bold leading-none tracking-tighter tabular-nums">
           {Math.min(progress, 100)}%
         </span>

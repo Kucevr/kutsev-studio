@@ -78,11 +78,11 @@ function App() {
   useEffect(() => {
     if (!loading) {
       // Progressive rendering: render Hero first, then the rest
-      // Much longer delay on mobile to ensure Hero is fully interactive
+      // Extreme delay on mobile to ensure full interactivity before heavy rendering
       const isMobile = window.innerWidth < 768;
       const restTimer = setTimeout(() => {
         setRenderRest(true);
-      }, isMobile ? 2500 : 100);
+      }, isMobile ? 4000 : 100);
 
       const kickstart = () => {
         // Only do aggressive kickstart on desktop

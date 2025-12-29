@@ -10,6 +10,7 @@ export const translations = {
       capabilities: 'Возможности',
       discuss: 'Обсудить',
       startProject: 'Начать проект',
+      menu: 'Меню',
     },
     hero: {
       tagline: 'Design Engineering Studio',
@@ -227,6 +228,7 @@ export const translations = {
       socials: 'Соцсети',
       sitemap: 'Карта сайта',
       rights: 'Все права защищены',
+      contact: 'Контакты',
     },
     contact: {
       startJourney: 'Начните свой путь',
@@ -298,6 +300,7 @@ export const translations = {
       capabilities: 'Capabilities',
       discuss: 'Let\'s Talk',
       startProject: 'Start Project',
+      menu: 'Menu',
     },
     hero: {
       tagline: 'Design Engineering Studio',
@@ -516,6 +519,7 @@ export const translations = {
       socials: 'Socials',
       sitemap: 'Sitemap',
       rights: 'All rights reserved',
+      contact: 'Contact',
     },
     contact: {
       startJourney: 'Start your journey',

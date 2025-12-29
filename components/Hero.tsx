@@ -3,7 +3,6 @@ import { ArrowDown, Play } from 'lucide-react';
 import { TextReveal } from './TextReveal';
 import { Magnetic } from './Magnetic';
 import { useLanguage } from '../LanguageContext';
-import { LottieAnimation } from './Animations';
 
 const Typewriter = ({ words, delay = 3000 }: { words: string[], delay?: number }) => {
   const [index, setIndex] = useState(0);
@@ -113,14 +112,6 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
       <div className="absolute inset-0 pointer-events-none select-none">
         <div className="absolute top-0 right-0 w-[60vw] h-[60vw] bg-brand-accent/10 blur-[150px] rounded-full mix-blend-screen animate-blob" />
         <div className="absolute bottom-0 left-0 w-[50vw] h-[50vw] bg-brand-purple/10 blur-[150px] rounded-full mix-blend-screen animate-blob animation-delay-2000" />
-        
-        {/* Lottie Background Animation - Disabled on mobile for performance */}
-        <div className="absolute inset-0 opacity-15 mix-blend-screen hidden md:block">
-          <LottieAnimation 
-            path="https://lottie.host/956e280c-05ad-4c29-ab3d-b1231415d288/85v6v6v6v6.json" 
-            className="w-full h-full scale-150"
-          />
-        </div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center justify-center h-full">
@@ -155,11 +146,17 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
                  className="relative w-24 h-24 md:w-32 md:h-32 flex items-center justify-center cursor-pointer group backdrop-blur-md rounded-full border border-white/10 bg-white/5 touch-none outline-none active:scale-95 transition-transform will-change-transform"
                  onPointerDown={(e) => {
                    e.stopPropagation();
-                   onContactClick();
+                   e.preventDefault();
+                   requestAnimationFrame(() => {
+                     onContactClick();
+                   });
                  }}
                  onTouchStart={(e) => {
                    e.stopPropagation();
-                   onContactClick();
+                   e.preventDefault();
+                   requestAnimationFrame(() => {
+                     onContactClick();
+                   });
                  }}
                >
                   <div className="absolute inset-0 bg-brand-accent/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>

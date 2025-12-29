@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { X, Send, Check } from 'lucide-react';
 import { Magnetic } from './Magnetic';
 import { useLanguage } from '../LanguageContext';
-import { LottieAnimation } from './Animations';
 
 interface ContactOverlayProps {
   isOpen: boolean;
@@ -92,11 +91,17 @@ export const ContactOverlay: React.FC<ContactOverlayProps> = ({ isOpen, onClose 
           <button 
             onPointerDown={(e) => {
               e.stopPropagation();
-              onClose();
+              e.preventDefault();
+              requestAnimationFrame(() => {
+                onClose();
+              });
             }}
             onTouchStart={(e) => {
               e.stopPropagation();
-              onClose();
+              e.preventDefault();
+              requestAnimationFrame(() => {
+                onClose();
+              });
             }}
             aria-label="Close Contact Form"
             className="w-10 h-10 md:w-12 md:h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white hover:text-black md:transition-all md:duration-300 border border-white/10 touch-none outline-none active:scale-90 transition-transform will-change-transform"
@@ -204,13 +209,12 @@ export const ContactOverlay: React.FC<ContactOverlayProps> = ({ isOpen, onClose 
               </form>
             ) : (
               <div className="flex flex-col items-center justify-center text-center h-full animate-fade-in-up">
-                <div className="relative mb-8 w-48 h-48">
-                  {/* Lottie Success Animation - Minimalist Checkmark */}
-                  <LottieAnimation 
-                    path="https://lottie.host/8533361b-0060-4432-b10a-099742969591/as79v6v6v6.json"
-                    className="w-full h-full"
-                    loop={false}
-                  />
+                <div className="relative mb-8 w-48 h-48 flex items-center justify-center">
+                  {/* Success Checkmark - Simple SVG */}
+                  <svg className="w-full h-full" viewBox="0 0 100 100" fill="none">
+                    <circle cx="50" cy="50" r="48" stroke="currentColor" strokeWidth="2" className="text-brand-accent opacity-20" />
+                    <path d="M35 50L45 60L70 35" stroke="currentColor" strokeWidth="4" className="text-brand-accent animate-pulse-slow" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                   <div className="absolute inset-0 bg-brand-accent/10 rounded-full blur-3xl animate-pulse-slow -z-10"></div>
                 </div>
                 
@@ -220,14 +224,12 @@ export const ContactOverlay: React.FC<ContactOverlayProps> = ({ isOpen, onClose 
                   {t('contact.success.desc2')}
                 </p>
 
-                <Magnetic strength={0.4}>
-                  <button 
-                    onClick={onClose}
-                    className="px-8 py-3 rounded-full border border-white/20 hover:bg-white hover:text-black transition-all uppercase tracking-widest text-sm font-bold"
-                  >
-                    {t('contact.success.back')}
-                  </button>
-                </Magnetic>
+                <button 
+                  onClick={onClose}
+                  className="px-8 py-3 rounded-full border border-white/20 hover:bg-white hover:text-black transition-all uppercase tracking-widest text-sm font-bold"
+                >
+                  {t('contact.success.back')}
+                </button>
               </div>
             )}
             
