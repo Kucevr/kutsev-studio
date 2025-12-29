@@ -42,6 +42,12 @@ export const Footer: React.FC<FooterProps> = ({ onContactClick }) => {
     <footer className="bg-brand-black pt-20 pb-16 sm:pb-24 pb-[env(safe-area-inset-bottom)] relative overflow-hidden">
       <div className="w-full h-px bg-linear-to-r from-transparent via-white/20 to-transparent mb-20"></div>
 
+      {/* Background Blobs for Footer */}
+      <div className="absolute inset-0 pointer-events-none select-none opacity-20">
+        <div className="absolute bottom-0 right-0 w-[60vw] h-[60vw] bg-brand-accent/10 blur-[100px] rounded-full animate-blob" />
+        <div className="absolute top-0 left-0 w-[50vw] h-[50vw] bg-brand-purple/10 blur-[100px] rounded-full animate-blob animation-delay-2000" />
+      </div>
+
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row justify-between items-start gap-12 mb-32">
           <div className="max-w-2xl">

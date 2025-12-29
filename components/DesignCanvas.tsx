@@ -39,8 +39,8 @@ const CanvasItem: React.FC<{
       <img 
         src={src} 
         alt={title} 
-        loading={isCenter ? "eager" : "lazy"}
-        fetchPriority={isCenter ? "high" : "auto"}
+        loading={isCenter || isMobile ? "eager" : "lazy"}
+        fetchPriority={isCenter || isMobile ? "high" : "auto"}
         decoding="async"
         className="relative z-10 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
       />

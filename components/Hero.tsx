@@ -110,14 +110,14 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
     >
       {/* Background Blobs */}
       <div className="absolute inset-0 pointer-events-none select-none">
-        <div className="absolute top-0 right-0 w-[60vw] h-[60vw] bg-brand-accent/10 blur-[150px] rounded-full mix-blend-screen animate-blob" />
-        <div className="absolute bottom-0 left-0 w-[50vw] h-[50vw] bg-brand-purple/10 blur-[150px] rounded-full mix-blend-screen animate-blob animation-delay-2000" />
+        <div className="absolute top-0 right-0 w-[80vw] h-[80vw] md:w-[60vw] md:h-[60vw] bg-brand-accent/20 md:bg-brand-accent/10 blur-[80px] md:blur-[150px] rounded-full mix-blend-screen animate-blob" />
+        <div className="absolute bottom-0 left-0 w-[70vw] h-[70vw] md:w-[50vw] md:h-[50vw] bg-brand-purple/20 md:bg-brand-purple/10 blur-[80px] md:blur-[150px] rounded-full mix-blend-screen animate-blob animation-delay-2000" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center justify-center h-full">
         
         {/* Top Tagline */}
-        <div className="mb-4 md:mb-8 opacity-0 animate-fade-in-up delay-200 flex flex-col items-center">
+        <div className="mb-4 md:mb-8 opacity-0 animate-fade-in-up flex flex-col items-center" style={{ animationDelay: '100ms' }}>
           <div className="h-10 w-px bg-linear-to-b from-transparent to-white/30 mb-4"></div>
           <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.4em] text-gray-400">
             {t('hero.tagline')}
@@ -127,7 +127,8 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
         {/* Main Title Block */}
         <div 
           ref={contentRef}
-          className="relative flex flex-col items-center text-center will-change-transform transition-transform duration-300 ease-out mb-12 w-full max-w-[100vw] overflow-hidden px-4"
+          className="relative flex flex-col items-center text-center will-change-transform transition-transform duration-300 ease-out mb-12 w-full max-w-[100vw] overflow-hidden px-4 opacity-0 animate-fade-in-up"
+          style={{ animationDelay: '200ms' }}
         >
           {/* Adjusted sizing for ABSOLUTE / АБСОЛЮТНОЕ */}
           <h1 className="text-[14vw] md:text-[13vw] leading-[0.85] font-display font-bold tracking-tighter mix-blend-exclusion text-white select-none relative z-10 whitespace-nowrap">
@@ -184,7 +185,7 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
         </div>
 
         {/* Bottom Structure: Button & Mission */}
-        <div className="w-full max-w-6xl mt-4 md:mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0 items-center md:items-start opacity-0 animate-fade-in-up delay-800 relative z-30 border-t border-white/10 pt-8">
+        <div className="w-full max-w-6xl mt-4 md:mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0 items-center md:items-start opacity-0 animate-fade-in-up relative z-30 border-t border-white/10 pt-8" style={{ animationDelay: '400ms' }}>
            <div className="flex justify-center md:justify-start">
               <Magnetic strength={0.4}>
                  <button 
