@@ -94,8 +94,12 @@ export const ContactOverlay: React.FC<ContactOverlayProps> = ({ isOpen, onClose 
               e.stopPropagation();
               onClose();
             }}
+            onTouchStart={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
             aria-label="Close Contact Form"
-            className="w-10 h-10 md:w-12 md:h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 border border-white/10 touch-none"
+            className="w-10 h-10 md:w-12 md:h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white hover:text-black md:transition-all md:duration-300 border border-white/10 touch-none outline-none"
           >
             <X size={20} />
           </button>

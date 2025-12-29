@@ -11,13 +11,21 @@ interface MagneticProps {
 export const Magnetic: React.FC<MagneticProps> = ({ children, strength = 0.5, className = '' }) => {
   const ref = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handlePointerDown = useCallback(() => {
-    triggerHaptic(5); // Light haptic on touch/click
+    triggerHaptic(5); 
   }, []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!ref.current || window.innerWidth < 768) return; // Disable magnetic on mobile for better performance
+    if (!ref.current || isMobile) return;
     
     if (rafRef.current) {
       cancelAnimationFrame(rafRef.current);
@@ -33,7 +41,7 @@ export const Magnetic: React.FC<MagneticProps> = ({ children, strength = 0.5, cl
       
       ref.current.style.transform = `translate(${middleX * strength}px, ${middleY * strength}px)`;
     });
-  }, [strength]);
+  }, [strength, isMobile]);
 
   const reset = useCallback(() => {
     if (rafRef.current) {
@@ -43,6 +51,14 @@ export const Magnetic: React.FC<MagneticProps> = ({ children, strength = 0.5, cl
       ref.current.style.transform = 'translate(0px, 0px)';
     }
   }, []);
+
+  if (isMobile) {
+    return (
+      <div className={className} onPointerDown={handlePointerDown}>
+        {children}
+      </div>
+    );
+  }
 
   return (
     <div
