@@ -66,7 +66,7 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
   const requestRef = useRef<number>(0);
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!containerRef.current || !contentRef.current) return;
+    if (!containerRef.current || !contentRef.current || window.innerWidth < 768) return;
     const rect = containerRef.current.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
@@ -136,10 +136,10 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
         {/* Main Title Block */}
         <div 
           ref={contentRef}
-          className="relative flex flex-col items-center text-center will-change-transform transition-transform duration-300 ease-out mb-12 w-full max-w-[100vw] overflow-hidden"
+          className="relative flex flex-col items-center text-center will-change-transform transition-transform duration-300 ease-out mb-12 w-full max-w-[100vw] overflow-hidden px-4"
         >
           {/* Adjusted sizing for ABSOLUTE / АБСОЛЮТНОЕ */}
-          <h1 className="text-[11vw] md:text-[13vw] leading-[0.85] font-display font-bold tracking-tighter mix-blend-exclusion text-white select-none relative z-10 whitespace-nowrap">
+          <h1 className="text-[14vw] md:text-[13vw] leading-[0.85] font-display font-bold tracking-tighter mix-blend-exclusion text-white select-none relative z-10 whitespace-nowrap">
             <Typewriter words={Array.isArray(t('hero.typewriter')) ? t('hero.typewriter') : [t('hero.digital')]} />
           </h1>
           
@@ -152,7 +152,7 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
 
              <Magnetic strength={0.3}>
                <div 
-                 className="relative w-20 h-20 md:w-32 md:h-32 flex items-center justify-center cursor-pointer group backdrop-blur-md rounded-full border border-white/10 bg-white/5"
+                 className="relative w-24 h-24 md:w-32 md:h-32 flex items-center justify-center cursor-pointer group backdrop-blur-md rounded-full border border-white/10 bg-white/5"
                  onClick={onContactClick}
                >
                   <div className="absolute inset-0 bg-brand-accent/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -164,15 +164,15 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
                       </textPath>
                     </text>
                   </svg>
-                  <div className="absolute w-8 h-8 bg-brand-accent rounded-full flex items-center justify-center group-hover:scale-125 transition-transform duration-300 shadow-lg shadow-brand-accent/20">
-                    <Play size={12} fill="white" className="ml-0.5" />
+                  <div className="absolute w-10 h-10 bg-brand-accent rounded-full flex items-center justify-center group-hover:scale-125 transition-transform duration-300 shadow-lg shadow-brand-accent/20">
+                    <Play size={14} fill="white" className="ml-0.5" />
                   </div>
                </div>
              </Magnetic>
           </div>
 
           {/* Adjusted sizing for MASTERY / МАСТЕРСТВО */}
-          <h1 className="text-[10vw] md:text-[12vw] leading-[0.85] font-display font-bold tracking-tighter select-none relative z-10 whitespace-nowrap">
+          <h1 className="text-[12vw] md:text-[12vw] leading-[0.85] font-display font-bold tracking-tighter select-none relative z-10 whitespace-nowrap">
             <span className="text-transparent bg-clip-text bg-linear-to-br from-white via-gray-300 to-white/50 animate-gradient-x bg-[length:200%_auto]">
                <TextReveal delay={500}>{t('hero.mastery')}</TextReveal>
             </span>
@@ -180,23 +180,23 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
         </div>
 
         {/* Bottom Structure: Button & Mission */}
-        <div className="w-full max-w-6xl mt-4 md:mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0 items-start opacity-0 animate-fade-in-up delay-800 relative z-30 border-t border-white/10 pt-8">
+        <div className="w-full max-w-6xl mt-4 md:mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0 items-center md:items-start opacity-0 animate-fade-in-up delay-800 relative z-30 border-t border-white/10 pt-8">
            <div className="flex justify-center md:justify-start">
               <Magnetic strength={0.4}>
                  <button 
                   onClick={scrollToWork}
-                  className="group relative px-8 py-4 rounded-full font-bold text-sm overflow-hidden bg-white text-black hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_-5px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.4)]"
+                  className="group relative w-full sm:w-auto px-10 py-5 rounded-full font-bold text-sm overflow-hidden bg-white text-black hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_-5px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.4)]"
                 >
                   <div className="absolute inset-0 bg-brand-accent translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out will-change-transform" />
-                  <span className="relative z-10 group-hover:text-white transition-colors duration-300 flex items-center gap-2">
+                  <span className="relative z-10 group-hover:text-white transition-colors duration-300 flex items-center justify-center gap-2">
                     {t('hero.viewWork')} <ArrowDown size={14} />
                   </span>
                 </button>
               </Magnetic>
            </div>
            
-           <div className="text-center md:text-right">
-              <p className="font-mono text-xs md:text-sm text-gray-400 leading-relaxed max-w-md ml-auto uppercase tracking-wide">
+           <div className="text-center md:text-right px-4">
+              <p className="font-mono text-[10px] md:text-sm text-gray-400 leading-relaxed max-w-md md:ml-auto uppercase tracking-widest">
                  {t('hero.mission')}
               </p>
            </div>

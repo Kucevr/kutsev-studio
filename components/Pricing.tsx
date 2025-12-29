@@ -98,7 +98,7 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
         </div>
 
         {/* Tabs */}
-        <div className="flex flex-wrap gap-x-12 gap-y-4 mb-16 border-b border-white/10">
+        <div className="flex overflow-x-auto no-scrollbar gap-x-8 md:gap-x-12 mb-12 md:mb-16 border-b border-white/10 -mx-6 px-6 md:mx-0 md:px-0">
           {[
             { id: 'main', label: t('pricing.tabs.main') },
             { id: 'packages', label: t('pricing.tabs.packages') },
@@ -108,7 +108,7 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
             <button 
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`pb-4 text-xs font-mono uppercase tracking-[0.2em] transition-all relative ${activeTab === tab.id ? 'text-white' : 'text-white/30 hover:text-white/60'}`}
+              className={`pb-4 text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] transition-all relative whitespace-nowrap ${activeTab === tab.id ? 'text-white' : 'text-white/30 hover:text-white/60'}`}
             >
               {tab.label}
               {activeTab === tab.id && <div className="absolute bottom-0 left-0 w-full h-[2px] bg-brand-accent" />}
@@ -130,9 +130,9 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
               {mainSolutions.map((item, index) => (
                 <div 
                   key={index}
-                  className="group relative grid grid-cols-1 md:grid-cols-[1.2fr_1.5fr_0.8fr_0.8fr_auto] gap-4 md:gap-8 items-center px-6 md:px-8 py-8 md:py-10 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/10 transition-all duration-500"
+                  className="group relative flex flex-col md:grid md:grid-cols-[1.2fr_1.5fr_0.8fr_0.8fr_auto] gap-6 md:gap-8 items-start md:items-center px-6 md:px-8 py-8 md:py-10 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/10 transition-all duration-500"
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 w-full">
                     <div className="w-12 h-12 rounded-xl bg-brand-accent/10 text-brand-accent flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                       {item.icon}
                     </div>
@@ -142,7 +142,7 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
                     </div>
                   </div>
                   
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 w-full">
                     {item.features.map((f, i) => (
                       <span key={i} className="text-[9px] font-mono uppercase tracking-tighter px-3 py-1 rounded-full bg-white/5 text-white/40 border border-white/5">
                         {f}
@@ -150,16 +150,16 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
                     ))}
                   </div>
 
-                  <div className="flex items-center gap-2 text-sm font-mono text-white/40">
+                  <div className="flex items-center gap-2 text-sm font-mono text-white/40 w-full md:w-auto">
                     <Clock size={14} className="text-brand-accent/50" />
                     {item.duration}
                   </div>
 
-                  <div className="text-2xl font-display font-bold text-brand-accent">
+                  <div className="text-3xl md:text-2xl font-display font-bold text-brand-accent w-full md:w-auto">
                     {item.price}
                   </div>
 
-                  <div className="md:w-[160px]">
+                  <div className="w-full md:w-[160px]">
                     <Magnetic strength={0.15}>
                       <button 
                         onClick={onContactClick}
@@ -179,25 +179,25 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
           )}
 
           {activeTab === 'packages' && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 animate-fade-in">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 animate-fade-in">
               {packages.map((item, index) => (
                 <div 
                   key={index}
-                  className="relative p-10 rounded-[2.5rem] border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/10 transition-all duration-500 flex flex-col"
+                  className="relative p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/10 transition-all duration-500 flex flex-col"
                 >
-                  <div className="mb-8">
-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-white/5 text-brand-accent">
+                  <div className="mb-6 md:mb-8">
+                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center mb-6 bg-white/5 text-brand-accent">
                       {item.icon}
                     </div>
-                    <h4 className="text-3xl font-display font-bold mb-2">{item.title}</h4>
+                    <h4 className="text-2xl md:text-3xl font-display font-bold mb-2">{item.title}</h4>
                     <p className="text-white/40 text-sm font-light">{item.desc}</p>
                   </div>
 
-                  <div className="text-4xl font-display font-bold text-white mb-8">
+                  <div className="text-3xl md:text-4xl font-display font-bold text-white mb-8">
                     {item.price}
                   </div>
 
-                  <ul className="space-y-4 mb-12 flex-grow">
+                  <ul className="space-y-4 mb-10 md:mb-12 flex-grow">
                     {item.features.map((f, i) => (
                       <li key={i} className="flex items-start gap-3 text-white/60 text-sm font-light">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-accent mt-1.5 shrink-0" />
@@ -209,7 +209,7 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
                   <Magnetic strength={0.2}>
                     <button 
                       onClick={onContactClick}
-                      className="w-full py-5 rounded-2xl font-bold text-[10px] uppercase tracking-widest transition-all bg-white/5 text-white hover:bg-white hover:text-black border border-white/10"
+                      className="w-full py-4 md:py-5 rounded-xl md:rounded-2xl font-bold text-[10px] uppercase tracking-widest transition-all bg-white/5 text-white hover:bg-white hover:text-black border border-white/10"
                     >
                       {t('pricing.select')}
                     </button>
@@ -247,40 +247,40 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
           )}
 
           {activeTab === 'details' && (
-            <div className="space-y-12 animate-fade-in">
+            <div className="space-y-8 md:space-y-12 animate-fade-in">
               {/* Notes Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 {[
                   { key: 'payment', icon: <CreditCard size={20} /> },
                   { key: 'urgency', icon: <Zap size={20} /> },
                   { key: 'revisions', icon: <Edit3 size={20} /> },
                   { key: 'warranty', icon: <ShieldCheck size={20} /> }
                 ].map((item) => (
-                  <div key={item.key} className="p-8 rounded-3xl border border-white/5 bg-white/[0.02] flex gap-6 items-start hover:bg-white/[0.04] transition-colors duration-500">
-                    <div className="w-12 h-12 rounded-2xl bg-brand-accent/10 text-brand-accent flex items-center justify-center shrink-0">
+                  <div key={item.key} className="p-6 md:p-8 rounded-2xl md:rounded-3xl border border-white/5 bg-white/[0.02] flex gap-4 md:gap-6 items-start hover:bg-white/[0.04] transition-colors duration-500">
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-brand-accent/10 text-brand-accent flex items-center justify-center shrink-0">
                       {item.icon}
                     </div>
                     <div>
-                      <h4 className="text-lg font-display font-bold mb-2">{t(`pricing.notes.${item.key}.title`)}</h4>
-                      <p className="text-white/40 text-sm leading-relaxed">{t(`pricing.notes.${item.key}.desc`)}</p>
+                      <h4 className="text-base md:text-lg font-display font-bold mb-1 md:mb-2">{t(`pricing.notes.${item.key}.title`)}</h4>
+                      <p className="text-white/40 text-xs md:text-sm leading-relaxed">{t(`pricing.notes.${item.key}.desc`)}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
               {/* Service Details */}
-              <div className="p-10 rounded-[2.5rem] border border-white/5 bg-white/[0.01]">
-                <h4 className="text-2xl font-display font-bold mb-8 px-2">{t('pricing.tabs.addons')} — {t('pricing.tabs.details')}</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-8">
+              <div className="p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-white/5 bg-white/[0.01]">
+                <h4 className="text-xl md:text-2xl font-display font-bold mb-6 md:mb-8 px-2">{t('pricing.tabs.addons')} — {t('pricing.tabs.details')}</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 md:gap-x-12 gap-y-6 md:gap-y-8">
                   {[
                     'copy', 'multi', 'seo', 'photo', 'page', 'redesign', 'mobile', 'changes', 'support'
                   ].map((key) => (
                     <div key={key} className="group">
-                      <h5 className="text-xs font-mono text-brand-accent uppercase tracking-widest mb-3 flex items-center gap-2">
+                      <h5 className="text-[10px] md:text-xs font-mono text-brand-accent uppercase tracking-widest mb-2 md:mb-3 flex items-center gap-2">
                         <div className="w-1 h-1 rounded-full bg-brand-accent" />
                         {t(`pricing.addons_data.${key}`)}
                       </h5>
-                      <p className="text-white/40 text-sm leading-relaxed group-hover:text-white/60 transition-colors">
+                      <p className="text-white/40 text-xs md:text-sm leading-relaxed group-hover:text-white/60 transition-colors">
                         {t(`pricing.details_data.${key}`)}
                       </p>
                     </div>

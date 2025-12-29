@@ -78,23 +78,25 @@ export const AllProjects: React.FC<AllProjectsProps> = ({ isOpen, onClose, onPro
       </div>
 
       <div className="h-[calc(100vh-96px)] overflow-y-auto pb-32 px-6 md:px-12 custom-scrollbar">
-        <div className="flex flex-wrap items-center gap-2 md:gap-4 py-8 mb-8">
-           <div className="flex items-center gap-2 text-brand-accent mr-4">
+        <div className="flex items-center gap-4 py-8 mb-8 overflow-x-auto no-scrollbar -mx-6 px-6 md:mx-0 md:px-0">
+           <div className="flex items-center gap-2 text-brand-accent shrink-0">
              <Filter size={16} />
              <span className="text-xs font-bold uppercase tracking-widest">{t('showcase.filter')}</span>
            </div>
-           {categories.map(cat => (
-             <button
-               key={cat}
-               onClick={() => {
-                 triggerHaptic(5);
-                 setActiveCategory(cat);
-               }}
-               className={`text-sm font-medium px-4 py-2 rounded-full border transition-all duration-300 ${activeCategory === cat ? 'bg-brand-accent text-white border-brand-accent' : 'bg-transparent text-gray-500 border-white/10 hover:border-white/30 hover:text-white'}`}
-             >
-               {cat === 'All' ? t('showcase.all') : cat}
-             </button>
-           ))}
+           <div className="flex gap-2">
+             {categories.map(cat => (
+               <button
+                 key={cat}
+                 onClick={() => {
+                   triggerHaptic(5);
+                   setActiveCategory(cat);
+                 }}
+                 className={`text-sm font-medium px-4 py-2 rounded-full border transition-all duration-300 whitespace-nowrap ${activeCategory === cat ? 'bg-brand-accent text-white border-brand-accent' : 'bg-transparent text-gray-500 border-white/10 hover:border-white/30 hover:text-white'}`}
+               >
+                 {cat === 'All' ? t('showcase.all') : cat}
+               </button>
+             ))}
+           </div>
         </div>
 
         <div className={`${viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12' : 'flex flex-col gap-4'}`}>

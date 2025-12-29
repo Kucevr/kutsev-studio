@@ -169,44 +169,73 @@ export const Header: React.FC<HeaderProps> = ({ onContactClick }) => {
 
       {/* Mobile Menu Overlay */}
       <div 
-        className={`fixed inset-0 bg-brand-black/95 backdrop-blur-xl z-30 flex flex-col justify-center px-8 transition-all duration-500 ease-in-out ${
+        className={`fixed inset-0 bg-brand-black/98 backdrop-blur-2xl z-30 flex flex-col transition-all duration-700 ease-expo ${
           mobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         }`}
       >
-        <div className="flex flex-col gap-8">
-          {navLinks.map((link, i) => (
+        <div className="flex flex-col h-full pt-32 pb-12 px-8 justify-between">
+          <nav className="flex flex-col gap-6">
+            <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-gray-500 mb-2">
+              {t('nav.menu')}
+            </span>
+            {navLinks.map((link, i) => (
+              <div 
+                key={link.name}
+                className={`transform transition-all duration-700 ease-expo ${
+                  mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                }`}
+                style={{ transitionDelay: `${100 + i * 100}ms` }}
+              >
+                <a 
+                  href={`#${link.id}`}
+                  className="text-5xl font-display font-bold text-white hover:text-brand-accent transition-colors block"
+                  onClick={(e) => scrollToSection(e, link.id)}
+                >
+                  {link.name}
+                </a>
+              </div>
+            ))}
+          </nav>
+          
+          <div className="flex flex-col gap-8">
             <div 
-              key={link.name}
-              className={`transform transition-all duration-500 ease-out ${
+              className={`transform transition-all duration-700 ease-expo ${
                 mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
               }`}
-              style={{ transitionDelay: `${100 + i * 100}ms` }}
+              style={{ transitionDelay: '400ms' }}
             >
-              <a 
-                href={`#${link.id}`}
-                className="text-5xl font-display font-bold text-transparent text-outline hover:text-white transition-all block"
-                onClick={(e) => scrollToSection(e, link.id)}
+              <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-gray-500 block mb-4">
+                {t('footer.contact')}
+              </span>
+              <button 
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onContactClick();
+                }} 
+                className="text-3xl text-left text-white font-display font-bold flex items-center gap-3 group"
               >
-                {link.name}
-              </a>
+                {t('nav.discuss')}
+                <div className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center group-active:scale-90 transition-transform">
+                  <ArrowUpRight size={20}/>
+                </div>
+              </button>
             </div>
-          ))}
-          
-          <div 
-            className={`transform transition-all duration-500 ease-out mt-4 ${
-              mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-            }`}
-            style={{ transitionDelay: '400ms' }}
-          >
-            <button 
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onContactClick();
-              }} 
-              className="text-xl text-left text-brand-accent font-medium flex items-center gap-2 hover:gap-4 transition-all"
+
+            <div 
+              className={`flex items-center justify-between pt-8 border-t border-white/10 transform transition-all duration-700 ease-expo ${
+                mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+              }`}
+              style={{ transitionDelay: '500ms' }}
             >
-              {t('nav.startProject')} <ArrowUpRight size={20}/>
-            </button>
+              <div className="flex gap-4">
+                <a href="https://t.me/kutsev_studio" target="_blank" rel="noopener noreferrer" className="text-sm font-mono text-gray-400">TG</a>
+                <a href="https://instagram.com/kutsev.studio" target="_blank" rel="noopener noreferrer" className="text-sm font-mono text-gray-400">IG</a>
+                <a href="https://behance.net/kutsev" target="_blank" rel="noopener noreferrer" className="text-sm font-mono text-gray-400">BE</a>
+              </div>
+              <button onClick={toggleLanguage} className="text-sm font-mono font-bold text-white uppercase">
+                {language === 'ru' ? 'English' : 'Русский'}
+              </button>
+            </div>
           </div>
         </div>
       </div>
