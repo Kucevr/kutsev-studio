@@ -90,6 +90,7 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects })
   const overlayRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
   
+  const [isMobile, setIsMobile] = React.useState(false);
   const progressRef = useRef(0);
   const targetProgressRef = useRef(0);
   const lastTimeRef = useRef<number>(0);
@@ -107,11 +108,13 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects })
   
   useEffect(() => {
     // Detect mobile and low-performance devices
-    isMobileRef.current = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-    isLowPerfRef.current = isMobileRef.current || navigator.hardwareConcurrency <= 4;
+    const mobileCheck = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+    setIsMobile(mobileCheck);
+    isMobileRef.current = mobileCheck;
+    isLowPerfRef.current = mobileCheck || navigator.hardwareConcurrency <= 4;
     
     // On mobile, skip expensive animation entirely
-    if (isMobileRef.current) {
+    if (mobileCheck) {
       warmupFramesRef.current = 999; // Skip warmup
       isVisibleRef.current = true; // Consider visible immediately
     }
@@ -254,8 +257,8 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects })
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative h-[500vh] md:h-[500vh] bg-brand-black z-20" style={{ height: isMobileRef.current ? '150vh' : '500vh' }}>
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-brand-black" style={{ perspective: isMobileRef.current ? 'none' : '1000px' }}>
+    <section ref={sectionRef} className="relative h-[500vh] md:h-[500vh] bg-brand-black z-20" style={{ height: isMobile ? '150vh' : '500vh' }}>
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-brand-black" style={{ perspective: isMobile ? 'none' : '1000px' }}>
         <div
           ref={overlayRef}
           className="absolute inset-0 opacity-0 transition-opacity duration-100 pointer-events-none z-0"
@@ -268,7 +271,7 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects })
         {/* Vignette */}
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)] z-10" />
 
-        {isMobileRef.current ? (
+        {isMobile ? (
           // Mobile: Horizontal row of 3 works
           <div 
             ref={containerRef}
@@ -335,7 +338,7 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects })
         )}
 
         {/* Desktop: Archive button at bottom */}
-        {!isMobileRef.current && (
+        {!isMobile && (
           <div className="absolute bottom-12 left-0 right-0 flex flex-col items-center gap-6 z-50">
             {onOpenAllProjects && (
               <button 
