@@ -1,5 +1,7 @@
 
 import React, { useEffect, useState, Suspense } from 'react';
+import { SpeedInsights } from "@vercel/speed-insights/react"
+import { Analytics } from "@vercel/analytics/react"
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { DesignCanvas } from './components/DesignCanvas';
@@ -185,6 +187,8 @@ function App() {
       </Suspense>
       
       <ContactOverlay isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
+      <SpeedInsights />
+      <Analytics />
     </div>
   );
 }
