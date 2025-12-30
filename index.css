@@ -443,18 +443,14 @@ body:hover::-webkit-scrollbar {
     transition: transform 0.1s ease-out;
   }
   
-  /* Performance optimizations for mobile */
-  .animate-blob, .animate-spin-slow, .animate-gradient-x, .animate-marquee {
-    animation: none !important;
-  }
-  
-  .mix-blend-screen, .mix-blend-exclusion {
-    mix-blend-mode: normal !important;
+  /* Performance optimizations for mobile - relaxed */
+  .animate-blob {
+    animation-duration: 15s !important; /* Slow down instead of killing */
   }
   
   .backdrop-blur-md, .backdrop-blur-xl {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+    backdrop-filter: blur(8px); /* Reduce instead of killing */
+    -webkit-backdrop-filter: blur(8px);
   }
 }
 
