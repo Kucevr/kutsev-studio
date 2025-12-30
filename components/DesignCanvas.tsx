@@ -7,6 +7,7 @@ const photo = (file: string) => new URL(`../sitephotos/${file}`, import.meta.url
 
 interface DesignCanvasProps {
   onOpenAllProjects?: () => void;
+  isPaused?: boolean;
 }
 
 const CanvasItem: React.FC<{ 
@@ -83,7 +84,7 @@ const lerp = (start: number, end: number, factor: number) => {
   return start + (end - start) * factor;
 };
 
-export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects }) => {
+export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, isPaused = false }) => {
   const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -95,9 +96,15 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects })
   const targetProgressRef = useRef(0);
   const lastTimeRef = useRef<number>(0);
   const isVisibleRef = useRef(false);
+  const isPausedRef = useRef(isPaused);
   const rafIdRef = useRef<number | null>(null);
   const tiltRef = useRef({ x: 0, y: 0 });
   const targetTiltRef = useRef({ x: 0, y: 0 });
+
+  // Update ref when prop changes
+  useEffect(() => {
+    isPausedRef.current = isPaused;
+  }, [isPaused]);
   
   // Warmup counter to snap animation on first frames
   const warmupFramesRef = useRef(0);
@@ -122,6 +129,12 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects })
 
   useEffect(() => {
     const loop = (time: number) => {
+      // Stop loop if paused (e.g. modal open)
+      if (isPausedRef.current) {
+        rafIdRef.current = null;
+        return;
+      }
+
       // Allow a few frames of warmup even if not visible to prime the GPU
       if (!isVisibleRef.current && warmupFramesRef.current >= 60) {
         rafIdRef.current = null;
@@ -235,8 +248,10 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects })
       observer.observe(sectionRef.current);
     }
     
-    // Start loop immediately for warmup
-    rafIdRef.current = requestAnimationFrame(loop);
+    // Start loop immediately for warmup if not paused
+    if (!isPaused) {
+      rafIdRef.current = requestAnimationFrame(loop);
+    }
     
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
@@ -254,7 +269,7 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects })
       }
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, []);
+  }, [isPaused]);
 
   return (
     <section ref={sectionRef} className="relative h-[500vh] md:h-[500vh] bg-brand-black z-20" style={{ height: isMobile ? '150vh' : '500vh' }}>

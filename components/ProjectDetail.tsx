@@ -17,6 +17,7 @@ interface ProjectDetailProps {
 export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose, onNext, onPrev }) => {
   const { t } = useLanguage();
   const [mounted, setMounted] = useState(false);
+  const galleryRef = useRef<HTMLDivElement>(null);
   
   const handleClose = () => {
     triggerHaptic(5);
@@ -36,6 +37,7 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose, 
       setMounted(true);
       const container = document.getElementById('project-detail-container');
       if (container) container.scrollTo(0, 0);
+      if (galleryRef.current) galleryRef.current.scrollTo(0, 0);
       triggerHaptic(5);
     } else {
       setTimeout(() => setMounted(false), 500);
@@ -173,7 +175,10 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose, 
                        <h4 className="text-2xl font-display font-bold uppercase tracking-wide">{t('project.gallery')}</h4>
                        <span className="text-xs font-mono text-gray-500 uppercase tracking-widest">{t('project.swipe')}</span>
                      </div>
-                     <div className="overflow-x-auto pb-4 custom-scrollbar">
+                     <div 
+                       ref={galleryRef}
+                       className="overflow-x-auto pb-4 custom-scrollbar"
+                     >
                        <div className="flex gap-4 min-w-full snap-x snap-mandatory">
                          {gallery.map((src, idx) => (
                            <div 

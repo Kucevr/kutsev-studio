@@ -421,6 +421,20 @@ body:hover::-webkit-scrollbar {
   button {
     cursor: pointer;
   }
+  
+  /* Performance optimizations for mobile */
+  .animate-blob, .animate-spin-slow, .animate-gradient-x, .animate-marquee {
+    animation: none !important;
+  }
+  
+  .mix-blend-screen, .mix-blend-exclusion {
+    mix-blend-mode: normal !important;
+  }
+  
+  .backdrop-blur-md, .backdrop-blur-xl {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
 }
 
 /* Utilities */

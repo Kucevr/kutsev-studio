@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { useLanguage } from '../LanguageContext';
 
-export const Process: React.FC = () => {
+export const Process: React.FC<{ isPaused?: boolean }> = ({ isPaused = false }) => {
   const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -9,6 +9,11 @@ export const Process: React.FC = () => {
   const targetX = useRef(0);
   const lastTimeRef = useRef<number>(0);
   const rafId = useRef<number | null>(null);
+  const isPausedRef = useRef(isPaused);
+
+  useEffect(() => {
+    isPausedRef.current = isPaused;
+  }, [isPaused]);
 
   const steps = [
     { step: "01", title: t('process.steps.analysis.title'), desc: t('process.steps.analysis.desc') },
@@ -27,7 +32,7 @@ export const Process: React.FC = () => {
     let isAnimating = false;
 
     const animate = (time: number) => {
-      if (!isVisible) {
+      if (!isVisible || isPausedRef.current) {
         isAnimating = false;
         lastTimeRef.current = 0;
         return;
@@ -94,6 +99,11 @@ export const Process: React.FC = () => {
       startAnimation();
     };
 
+    // Restart animation when unpaused
+    if (!isPaused) {
+      startAnimation();
+    }
+
     // IntersectionObserver для остановки анимации когда секция не видна
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -124,7 +134,7 @@ export const Process: React.FC = () => {
         cancelAnimationFrame(rafId.current);
       }
     };
-  }, []);
+  }, [isPaused]);
 
   return (
     <section ref={sectionRef} className="relative h-[300vh] bg-white text-black">
