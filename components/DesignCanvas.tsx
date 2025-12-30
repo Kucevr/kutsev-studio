@@ -92,6 +92,7 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
   
   const [isMobile, setIsMobile] = React.useState(false);
+  const [mobileVisible, setMobileVisible] = React.useState([false, false, false]);
   const progressRef = useRef(0);
   const targetProgressRef = useRef(0);
   const lastTimeRef = useRef<number>(0);
@@ -128,9 +129,30 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
   }, []);
 
   useEffect(() => {
+    if (isMobile) {
+      const observers = itemsRef.current.slice(0, 3).map((item, idx) => {
+        if (!item) return null;
+        const obs = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) {
+            setMobileVisible(prev => {
+              const next = [...prev];
+              next[idx] = true;
+              return next;
+            });
+            obs.disconnect();
+          }
+        }, { threshold: 0.2 });
+        obs.observe(item);
+        return obs;
+      });
+      return () => observers.forEach(obs => obs?.disconnect());
+    }
+  }, [isMobile]);
+
+  useEffect(() => {
     const loop = (time: number) => {
-      // Stop loop if paused (e.g. modal open)
-      if (isPausedRef.current) {
+      // Stop loop if paused (e.g. modal open) or on mobile (use CSS instead)
+      if (isPausedRef.current || isMobileRef.current) {
         rafIdRef.current = null;
         return;
       }
@@ -287,14 +309,17 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)] z-10" />
 
         {isMobile ? (
-          // Mobile: Vertical column of 3 works
+          // Mobile: Vertical column of 3 works with CSS entry animations
           <div 
             ref={containerRef}
-            className="flex flex-col w-full items-center justify-center gap-4 px-4 z-20"
+            className="flex flex-col w-full items-center justify-center gap-8 px-4 z-20"
             style={{ transform: 'translate3d(0,0,0)' }}
           >
             {/* Center item + first 2 from gridImages = 3 items total */}
-            <div ref={el => { itemsRef.current[0] = el; }} className="w-full flex items-center justify-center">
+            <div 
+              ref={el => { itemsRef.current[0] = el; }} 
+              className={`w-full flex items-center justify-center transition-all duration-1000 ease-out ${mobileVisible[0] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+            >
               <CanvasItem 
                 src={photo('nyc-atmosphere.avif')} 
                 title="KUTSEV STUDIO" 
@@ -303,7 +328,11 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
               />
             </div>
             {gridImages.slice(0, 2).map((img, i) => (
-              <div key={i} ref={el => { itemsRef.current[i + 1] = el; }} className="w-full flex items-center justify-center">
+              <div 
+                key={i} 
+                ref={el => { itemsRef.current[i + 1] = el; }} 
+                className={`w-full flex items-center justify-center transition-all duration-1000 ease-out delay-${(i + 1) * 100} ${mobileVisible[i + 1] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+              >
                 <CanvasItem 
                   src={img.src} 
                   title={img.title} 
@@ -313,11 +342,11 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
             ))}
             
             {/* Archive button at the bottom */}
-            <div className="mt-4 flex justify-center w-full">
+            <div className={`mt-4 flex justify-center w-full transition-all duration-1000 delay-500 ${mobileVisible[2] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               {onOpenAllProjects && (
                 <button 
                   onClick={onOpenAllProjects}
-                  className="group flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white hover:bg-white hover:text-black transition-all duration-500 transform active:scale-95"
+                  className="group flex items-center gap-3 px-8 py-4 bg-white/10 border border-white/20 rounded-full text-white active:scale-95 transition-all"
                 >
                   <span className="text-xs font-bold uppercase tracking-widest">{t('showcase.archiveTitle')}</span>
                   <Maximize2 size={18} className="group-hover:rotate-90 transition-transform duration-500" />

@@ -132,6 +132,7 @@ function App() {
       {window.innerWidth >= 768 && <CustomCursor />}
       {window.innerWidth >= 768 && <ScrollProgress />}
       <div className="bg-noise"></div>
+      {window.innerWidth < 768 && <div className="bg-grain-static"></div>}
       
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 

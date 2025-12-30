@@ -110,8 +110,22 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
     >
       {/* Background Blobs */}
       <div className="absolute inset-0 pointer-events-none select-none">
-        <div className="absolute top-0 right-0 w-[80vw] h-[80vw] md:w-[60vw] md:h-[60vw] bg-brand-accent/20 md:bg-brand-accent/10 blur-[80px] md:blur-[150px] rounded-full mix-blend-screen animate-blob" />
-        <div className="absolute bottom-0 left-0 w-[70vw] h-[70vw] md:w-[50vw] md:h-[50vw] bg-brand-purple/20 md:bg-brand-purple/10 blur-[80px] md:blur-[150px] rounded-full mix-blend-screen animate-blob animation-delay-2000" />
+        {/* Desktop: Animated Blobs */}
+        <div className="hidden md:block">
+          <div className="absolute top-0 right-0 w-[60vw] h-[60vw] bg-brand-accent/10 blur-[150px] rounded-full mix-blend-screen animate-blob" />
+          <div className="absolute bottom-0 left-0 w-[50vw] h-[50vw] bg-brand-purple/10 blur-[150px] rounded-full mix-blend-screen animate-blob animation-delay-2000" />
+        </div>
+        
+        {/* Mobile: Static Mesh Gradient (High Performance) */}
+        <div className="md:hidden absolute inset-0 opacity-40" 
+          style={{ 
+            background: `
+              radial-gradient(circle at 80% 20%, var(--color-brand-accent) 0%, transparent 40%),
+              radial-gradient(circle at 20% 80%, var(--color-brand-purple) 0%, transparent 40%)
+            `,
+            filter: 'blur(60px)'
+          }} 
+        />
       </div>
 
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center justify-center h-full">
