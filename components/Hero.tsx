@@ -47,7 +47,7 @@ const Typewriter = ({ words, delay = 3000 }: { words: string[], delay?: number }
   }, [subIndex, index, reverse, words, delay]);
 
   return (
-    <span className="inline-block min-w-[5ch] text-left">
+    <span className="inline-block min-w-[5ch] text-left font-sans py-2">
       {words[index].substring(0, subIndex)}
       <span className={`${blink ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100`}>|</span>
     </span>
@@ -141,7 +141,7 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
         {/* Main Title Block */}
         <div 
           ref={contentRef}
-          className="relative flex flex-col items-center text-center will-change-transform transition-transform duration-300 ease-out mb-12 w-full max-w-[100vw] overflow-hidden px-4 opacity-0 animate-fade-in-up"
+          className="relative flex flex-col items-center text-center will-change-transform transition-transform duration-300 ease-out mb-12 w-full max-w-[100vw] overflow-visible px-4 opacity-0 animate-fade-in-up"
           style={{ animationDelay: '200ms' }}
         >
           {/* Adjusted sizing for ABSOLUTE / АБСОЛЮТНОЕ */}

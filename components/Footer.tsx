@@ -72,9 +72,11 @@ export const Footer: React.FC<FooterProps> = ({ onContactClick }) => {
                 <Magnetic strength={0.3}>
                   <a 
                     href="mailto:hello@kutsev.studio"
-                    className="w-full sm:w-auto px-8 py-4 border border-white/20 rounded-full font-bold text-sm md:text-lg text-white hover:bg-white hover:text-black transition-all duration-300 inline-block text-center break-all"
+                    className="group w-full sm:w-auto px-8 py-4 border border-white/20 rounded-full font-bold text-sm md:text-lg text-white hover:bg-white transition-all duration-300 inline-block text-center break-all"
                   >
-                    hello@kutsev.studio
+                    <span className="group-hover:text-black transition-colors duration-300">
+                      hello@kutsev.studio
+                    </span>
                   </a>
                 </Magnetic>
             </div>
