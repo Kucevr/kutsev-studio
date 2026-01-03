@@ -1,8 +1,9 @@
 
-import React, { useRef, useEffect, useTransition } from 'react';
+import React, { useRef, useEffect, useTransition, memo } from 'react';
 import { Maximize2 } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
 import { throttle } from '../utils/performance';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 const photo = (file: string) => new URL(`../sitephotos/${file}`, import.meta.url).href;
 
@@ -11,14 +12,20 @@ interface DesignCanvasProps {
   isPaused?: boolean;
 }
 
-const CanvasItem: React.FC<{ 
+const CanvasItem = memo(({ 
+  src, 
+  title, 
+  isCenter = false, 
+  style, 
+  depth = 1 
+}: { 
   src: string; 
   title: string; 
   isCenter?: boolean;
   style?: React.CSSProperties;
   depth?: number;
-}> = ({ src, title, isCenter = false, style, depth = 1 }) => {
-  const isMobile = window.innerWidth < 768;
+}) => {
+  const isMobile = useIsMobile();
   
   return (
   <div 
@@ -56,7 +63,9 @@ const CanvasItem: React.FC<{
     </div>
   </div>
   );
-};
+});
+
+CanvasItem.displayName = 'CanvasItem';
 
 const gridImages = [
   { src: photo('focusflow.avif'), title: 'Focusflow', depth: 1.2 },
@@ -92,7 +101,7 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
   const overlayRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
   
-  const [isMobile, setIsMobile] = React.useState(false);
+  const isMobile = useIsMobile();
   const [isPending, startTransition] = useTransition();
   const progressRef = useRef(0);
   const targetProgressRef = useRef(0);
@@ -114,17 +123,14 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
   const warmupFramesRef = useRef(0);
   
   // Mobile detection and performance optimization
-  const isMobileRef = useRef(false);
+  const isMobileRef = useRef(isMobile);
   const isLowPerfRef = useRef(false);
   
   useEffect(() => {
     // Detect mobile and low-performance devices
     const mobileCheck = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-    startTransition(() => {
-      setIsMobile(mobileCheck);
-    });
     isMobileRef.current = mobileCheck;
-    isLowPerfRef.current = mobileCheck || navigator.hardwareConcurrency <= 4;
+    isLowPerfRef.current = mobileCheck || (typeof navigator !== 'undefined' && navigator.hardwareConcurrency <= 4);
     
     // On mobile, skip expensive animation entirely
     if (mobileCheck) {

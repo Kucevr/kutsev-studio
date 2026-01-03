@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { ArrowRight, Plus, Zap, Layers, ShoppingCart, Globe, Search, Image, Smartphone, RefreshCw, FileText, Clock, Box, Star, Crown, CreditCard, Edit3, ShieldCheck } from 'lucide-react';
 import { Magnetic } from './Magnetic';
 import { useLanguage } from '../LanguageContext';
@@ -7,7 +7,7 @@ interface PricingProps {
   onContactClick: () => void;
 }
 
-export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
+export const Pricing: React.FC<PricingProps> = memo(({ onContactClick }) => {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<'main' | 'packages' | 'addons' | 'details'>('main');
 
@@ -306,4 +306,5 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
       </div>
     </section>
   );
-};
+});
+Pricing.displayName = "Pricing";

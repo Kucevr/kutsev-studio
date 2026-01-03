@@ -1,6 +1,7 @@
 
 import React, { useRef, useCallback } from 'react';
 import { triggerHaptic } from '../utils/haptics';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 interface MagneticProps {
   children: React.ReactNode;
@@ -11,14 +12,7 @@ interface MagneticProps {
 export const Magnetic: React.FC<MagneticProps> = ({ children, strength = 0.5, className = '' }) => {
   const ref = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
-  const [isMobile, setIsMobile] = React.useState(false);
-
-  React.useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  const isMobile = useIsMobile();
 
   const handlePointerDown = useCallback(() => {
     triggerHaptic(5); 

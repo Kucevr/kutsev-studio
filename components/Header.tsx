@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, ArrowUpRight, Globe } from 'lucide-react';
 import { Magnetic } from './Magnetic';
 import { useLanguage } from '../LanguageContext';
+import { throttle } from '../utils/performance';
 
 interface HeaderProps {
   onContactClick: () => void;
@@ -13,52 +14,51 @@ export const Header: React.FC<HeaderProps> = ({ onContactClick }) => {
   const [activeSection, setActiveSection] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
-  const ticking = useRef(false);
   const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = throttle(() => {
       const scrollY = window.scrollY;
+      
+      // Glass effect trigger
+      setIsScrolled(scrollY > 20);
 
-      if (!ticking.current) {
-        window.requestAnimationFrame(() => {
-          // Glass effect trigger
-          setIsScrolled(scrollY > 20);
-
-          // Smart Hide/Show logic
-          if (scrollY > lastScrollY.current && scrollY > 100) {
-             setIsHidden(true);
-          } else {
-             setIsHidden(false);
-          }
-          lastScrollY.current = scrollY;
-
-          // Active section logic
-          const sections = ['work', 'services', 'capabilities', 'stack'];
-          let current = '';
-          const viewportMiddle = window.innerHeight / 3;
-
-          for (const id of sections) {
-            const element = document.getElementById(id);
-            if (element) {
-              const rect = element.getBoundingClientRect();
-              if (rect.top <= viewportMiddle && rect.bottom >= viewportMiddle) {
-                current = id;
-                break;
-              }
-            }
-          }
-          if (current) setActiveSection(current);
-          
-          ticking.current = false;
-        });
-
-        ticking.current = true;
+      // Smart Hide/Show logic
+      if (scrollY > lastScrollY.current && scrollY > 100) {
+         setIsHidden(true);
+      } else {
+         setIsHidden(false);
       }
-    };
+      lastScrollY.current = scrollY;
+    }, 100);
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const sections = ['work', 'services', 'capabilities', 'stack'];
+    const observers = sections.map(id => {
+      const element = document.getElementById(id);
+      if (!element) return null;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              setActiveSection(id);
+            }
+          });
+        },
+        { threshold: 0.2, rootMargin: '-20% 0px -60% 0px' }
+      );
+      observer.observe(element);
+      return observer;
+    });
+
+    return () => {
+      observers.forEach(obs => obs?.disconnect());
+    };
   }, []);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, memo, useMemo } from 'react';
 
 interface TextRevealProps {
   children: string;
@@ -6,7 +6,7 @@ interface TextRevealProps {
   delay?: number;
 }
 
-export const TextReveal: React.FC<TextRevealProps> = ({ children, className = '', delay = 0 }) => {
+export const TextReveal: React.FC<TextRevealProps> = memo(({ children, className = '', delay = 0 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -15,7 +15,12 @@ export const TextReveal: React.FC<TextRevealProps> = ({ children, className = ''
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setTimeout(() => setIsVisible(true), isMobile ? 50 : 100);
+          const startAnimation = () => setIsVisible(true);
+          if ('requestIdleCallback' in window) {
+            (window as any).requestIdleCallback(() => setTimeout(startAnimation, isMobile ? 50 : 100));
+          } else {
+            setTimeout(startAnimation, isMobile ? 50 : 100);
+          }
           observer.disconnect();
         }
       },
@@ -29,17 +34,21 @@ export const TextReveal: React.FC<TextRevealProps> = ({ children, className = ''
     return () => observer.disconnect();
   }, []);
 
-  const words = children.split(' ');
+  const words = useMemo(() => children.split(' '), [children]);
+  const isMobile = useMemo(() => typeof window !== 'undefined' && window.innerWidth < 768, []);
 
   return (
     <div ref={ref} className={`flex flex-wrap ${className}`}> 
       {words.map((word, i) => (
         <span key={i} className="overflow-hidden inline-block py-1 -my-1">
           <span
-            className={`inline-block mr-[0.25em] transform transition-all duration-[800ms] md:duration-[1000ms] ease-[0.16,1,0.3,1] will-change-transform ${
+            className={`inline-block mr-[0.25em] transform transition-all duration-800 md:duration-1000 ease-[0.16,1,0.3,1] will-change-transform ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-[110%] opacity-0'
             }`}
-            style={{ transitionDelay: `${delay + i * (window.innerWidth < 768 ? 15 : 30)}ms` }}
+            style={{ 
+              transitionDelay: `${delay + i * (isMobile ? 10 : 30)}ms`,
+              transitionProperty: isVisible ? 'all' : 'none'
+            }}
           >
             {word}
           </span>
@@ -47,4 +56,6 @@ export const TextReveal: React.FC<TextRevealProps> = ({ children, className = ''
       ))}
     </div>
   );
-};
+});
+
+TextReveal.displayName = "TextReveal";

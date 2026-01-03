@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, memo } from 'react';
 import { Layout, Smartphone, Globe, Box, Cpu, PenTool, ArrowUpRight } from 'lucide-react';
 import { TextReveal } from './TextReveal';
 import { useLanguage } from '../LanguageContext';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 const IconMap: Record<string, React.FC<any>> = {
   layout: Layout,
@@ -12,13 +13,14 @@ const IconMap: Record<string, React.FC<any>> = {
   cpu: Cpu,
 };
 
-const SpotlightCard: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => {
+const SpotlightCard = memo(({ children, className = '' }: { children: React.ReactNode; className?: string }) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
+  const isMobile = useIsMobile();
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!divRef.current) return;
+    if (!divRef.current || isMobile) return;
     const rect = divRef.current.getBoundingClientRect();
     setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
@@ -27,29 +29,34 @@ const SpotlightCard: React.FC<{ children: React.ReactNode; className?: string }>
     <div
       ref={divRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setOpacity(1)}
-      onMouseLeave={() => setOpacity(0)}
+      onMouseEnter={() => !isMobile && setOpacity(1)}
+      onMouseLeave={() => !isMobile && setOpacity(0)}
       className={`relative overflow-hidden bg-brand-gray border border-white/5 rounded-3xl ${className}`}
     >
-      <div
-        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 z-20"
-        style={{
-          opacity,
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(255,255,255,.08), transparent 40%)`,
-        }}
-      />
+      {!isMobile && (
+        <div
+          className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 z-20"
+          style={{
+            opacity,
+            background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(255,255,255,.08), transparent 40%)`,
+          }}
+        />
+      )}
       <div className="relative h-full z-10">{children}</div>
     </div>
   );
-};
+});
+
+SpotlightCard.displayName = 'SpotlightCard';
 
 export const Services: React.FC = () => {
   const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const spotlightRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!sectionRef.current || !spotlightRef.current) return;
+    if (!sectionRef.current || !spotlightRef.current || isMobile) return;
     const rect = sectionRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;

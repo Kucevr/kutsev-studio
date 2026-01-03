@@ -21,6 +21,8 @@ import { CustomCursor } from './components/CustomCursor';
 import { ScrollProgress } from './components/ScrollProgress';
 import { SchemaMarkup } from './components/SchemaMarkup';
 
+import { useIsMobile } from './hooks/useIsMobile';
+
 // Lazy load heavy components
 const ProjectDetail = React.lazy(() => import('./components/ProjectDetail').then(module => ({ default: module.ProjectDetail })));
 const AllProjects = React.lazy(() => import('./components/AllProjects').then(module => ({ default: module.AllProjects })));
@@ -30,6 +32,7 @@ function App() {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isAllProjectsOpen, setIsAllProjectsOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(null);
+  const isMobile = useIsMobile();
 
   const isModalOpen = !!selectedProject || isContactOpen || isAllProjectsOpen;
 
@@ -78,8 +81,6 @@ function App() {
   // Kickstart animations and browser rendering after loading
   useEffect(() => {
     if (!loading) {
-      const isMobile = window.innerWidth < 768;
-
       const kickstart = () => {
         if (!isMobile) {
           document.body.style.transform = 'translateZ(0)';
@@ -102,15 +103,13 @@ function App() {
             events.forEach(e => window.dispatchEvent(e));
             document.body.style.transform = '';
           }, 50);
-        } else {
-          window.dispatchEvent(new Event('resize'));
         }
       };
       
       const timer = setTimeout(kickstart, 150);
       return () => clearTimeout(timer);
     }
-  }, [loading]);
+  }, [loading, isMobile]);
 
   const handleNextProject = () => {
     if (!selectedProject) return;
@@ -131,10 +130,10 @@ function App() {
   return (
     <div className="min-h-screen bg-brand-black text-white selection:bg-brand-accent selection:text-white relative">
       <SchemaMarkup />
-      {window.innerWidth >= 768 && <CustomCursor />}
-      {window.innerWidth >= 768 && <ScrollProgress />}
+      {!isMobile && <CustomCursor />}
+      {!isMobile && <ScrollProgress />}
       <div className="bg-noise"></div>
-      {window.innerWidth < 768 && <div className="bg-grain-static"></div>}
+      {isMobile && <div className="bg-grain-static"></div>}
       
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 

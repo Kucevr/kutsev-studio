@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { ArrowUpRight, Github, Twitter, Linkedin, Instagram, ArrowUp, Globe } from 'lucide-react';
 import { Magnetic } from './Magnetic';
 import { useLanguage } from '../LanguageContext';
@@ -8,7 +8,7 @@ interface FooterProps {
   onContactClick: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onContactClick }) => {
+export const Footer: React.FC<FooterProps> = memo(({ onContactClick }) => {
   const { t } = useLanguage();
   const [time, setTime] = useState('');
 
@@ -39,7 +39,7 @@ export const Footer: React.FC<FooterProps> = ({ onContactClick }) => {
   };
 
   return (
-    <footer className="bg-brand-black pt-20 pb-16 sm:pb-24 pb-[env(safe-area-inset-bottom)] relative overflow-hidden">
+    <footer className="bg-brand-black pt-20 pb-16 sm:pb-24 relative overflow-hidden">
       <div className="w-full h-px bg-linear-to-r from-transparent via-white/20 to-transparent mb-20"></div>
 
       {/* Background Blobs for Footer */}
@@ -137,4 +137,6 @@ export const Footer: React.FC<FooterProps> = ({ onContactClick }) => {
       </div>
     </footer>
   );
-};
+});
+
+Footer.displayName = "Footer";
