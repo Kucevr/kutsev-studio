@@ -11,8 +11,6 @@ export const Process: React.FC<{ isPaused?: boolean }> = ({ isPaused = false }) 
   const lastTimeRef = useRef<number>(0);
   const rafId = useRef<number | null>(null);
   const isPausedRef = useRef(isPaused);
-  const isScrollingRef = useRef(false);
-  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     isPausedRef.current = isPaused;
@@ -35,13 +33,9 @@ export const Process: React.FC<{ isPaused?: boolean }> = ({ isPaused = false }) 
     let isAnimating = false;
 
     const animate = (time: number) => {
-      if (!isVisible || isPausedRef.current || isScrollingRef.current) {
-        if (isVisible && !isPausedRef.current) {
-          rafId.current = requestAnimationFrame(animate);
-        } else {
-          isAnimating = false;
-          lastTimeRef.current = 0;
-        }
+      if (!isVisible || isPausedRef.current) {
+        isAnimating = false;
+        lastTimeRef.current = 0;
         return;
       }
 
@@ -102,16 +96,6 @@ export const Process: React.FC<{ isPaused?: boolean }> = ({ isPaused = false }) 
     };
 
     const handleScroll = throttle(() => {
-      isScrollingRef.current = true;
-      
-      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
-      scrollTimeoutRef.current = setTimeout(() => {
-        isScrollingRef.current = false;
-        if (!rafId.current && isVisible) {
-          startAnimation();
-        }
-      }, 150);
-      
       calculateTarget();
       startAnimation();
     }, 16);
@@ -149,9 +133,6 @@ export const Process: React.FC<{ isPaused?: boolean }> = ({ isPaused = false }) 
       observer.disconnect();
       if (rafId.current) {
         cancelAnimationFrame(rafId.current);
-      }
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
       }
     };
   }, [isPaused]);

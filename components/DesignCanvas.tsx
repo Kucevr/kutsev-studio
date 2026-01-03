@@ -108,8 +108,6 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
   const lastTimeRef = useRef<number>(0);
   const isVisibleRef = useRef(false);
   const isPausedRef = useRef(isPaused);
-  const isScrollingRef = useRef(false);
-  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rafIdRef = useRef<number | null>(null);
   const tiltRef = useRef({ x: 0, y: 0 });
   const targetTiltRef = useRef({ x: 0, y: 0 });
@@ -141,8 +139,8 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
 
   useEffect(() => {
     const loop = (time: number) => {
-      // Stop loop if paused (e.g. modal open) or user is scrolling
-      if (isPausedRef.current || isScrollingRef.current) {
+      // Stop loop if paused (e.g. modal open)
+      if (isPausedRef.current) {
         rafIdRef.current = requestAnimationFrame(loop);
         return;
       }
@@ -197,7 +195,7 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
           
           // Reduce animation intensity on mobile for better performance
           const floatIntensity = isLowPerfRef.current ? 3 : 10;
-          const parallaxIntensity = isMobileRef.current ? 0 : 40;
+          const parallaxIntensity = isMobileRef.current ? 5 : 40;
           
           const floatX = Math.sin(time * 0.001 + i) * floatIntensity * (1 - ease);
           const floatY = Math.cos(time * 0.0012 + i) * floatIntensity * (1 - ease);
@@ -237,22 +235,16 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
 
     const handleScroll = throttle(() => {
       if (sectionRef.current && isVisibleRef.current) {
-        isScrollingRef.current = true;
-        
-        if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
-        scrollTimeoutRef.current = setTimeout(() => {
-          isScrollingRef.current = false;
-          if (!rafIdRef.current && isVisibleRef.current) {
-            startLoop();
-          }
-        }, 150);
-        
         const rect = sectionRef.current.getBoundingClientRect();
         const viewportHeight = window.innerHeight;
         const totalDist = rect.height - viewportHeight;
         let raw = -rect.top / totalDist;
         raw = Math.max(0, Math.min(1, raw));
         targetProgressRef.current = raw;
+        
+        if (!rafIdRef.current) {
+          startLoop();
+        }
       }
     }, 16);
 
@@ -289,16 +281,13 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
       if (rafIdRef.current) {
         cancelAnimationFrame(rafIdRef.current);
       }
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, [isPaused]);
 
   return (
     <section ref={sectionRef} className="relative h-[500vh] md:h-[500vh] bg-brand-black z-20" style={{ height: isMobile ? '200vh' : '500vh' }}>
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-brand-black" style={{ perspective: isMobile ? 'none' : '1000px' }}>
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-brand-black" style={{ perspective: isMobile ? '800px' : '1000px' }}>
         <div
           ref={overlayRef}
           className="absolute inset-0 opacity-0 transition-opacity duration-100 pointer-events-none z-0"

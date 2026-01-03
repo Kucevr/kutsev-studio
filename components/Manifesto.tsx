@@ -33,7 +33,7 @@ const SplitText = memo(({ text, progress }: { text: string, progress: number }) 
         return (
           <span key={i} className="relative inline-block">
             <span 
-              className="inline-block transition-all duration-1000"
+              className="inline-block transition-all duration-150 ease-out"
               style={{
                 WebkitTextStroke: '1px rgba(255,255,255,0.08)',
                 color: 'transparent',
@@ -105,13 +105,13 @@ const PrincipleItem = memo(({
     >
       <div className="relative z-10">
         <div className="flex items-center gap-6 mb-8 overflow-hidden">
-          <div className={`font-mono text-[10px] md:text-xs transition-all duration-1000 flex items-center gap-3 ${localProgress > 0.2 ? 'text-brand-accent' : 'text-gray-800'}`}>
+          <div className={`font-mono text-[10px] md:text-xs transition-all duration-150 flex items-center gap-3 ${localProgress > 0.2 ? 'text-brand-accent' : 'text-gray-800'}`}>
             <span className="opacity-50">ID:</span>
             <span className="font-bold">0x0{idx + 1}</span>
             <span className={`w-2 h-2 rounded-full ${localProgress > 0.2 ? 'bg-brand-accent animate-pulse' : 'bg-gray-800'}`} />
           </div>
           <div 
-            className="h-px grow bg-white/5 transition-all duration-1000 origin-left"
+            className="h-px grow bg-white/5 transition-all duration-150 origin-left"
             style={{ transform: `scaleX(${Math.max(0, (localProgress - 0.1) * 2)})`, backgroundColor: localProgress > 0.3 ? 'rgba(55,88,249,0.3)' : 'rgba(255,255,255,0.05)' }}
           />
         </div>
@@ -148,11 +148,11 @@ const PrincipleItem = memo(({
         </div>
         
         <div 
-          className="mt-20 flex items-center justify-end transition-all duration-1000"
+          className="mt-20 flex items-center justify-end transition-all duration-150"
           style={{ opacity: Math.max(0, (localProgress - 0.8) * 5), transform: `translateY(${(1 - Math.max(0, (localProgress - 0.8) * 5)) * 20}px)` }}
         >
           <div className="w-20 h-20 rounded-full border border-brand-accent/20 flex items-center justify-center overflow-hidden relative group/btn cursor-pointer">
-            <div className="absolute inset-0 bg-brand-accent translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500" />
+            <div className="absolute inset-0 bg-brand-accent translate-y-full group-hover/btn:translate-y-0 transition-transform duration-150" />
             <svg width="28" height="28" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 transition-all duration-700 group-hover/btn:rotate-45 group-hover/btn:scale-110">
               <path d="M1.5 12.5L12.5 1.5M12.5 1.5H1.5M12.5 1.5V12.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
@@ -162,7 +162,7 @@ const PrincipleItem = memo(({
       
       <div className="absolute -top-24 -left-4 md:-left-12 flex flex-col items-center gap-6">
         <div 
-          className="w-px transition-all duration-1000 ease-out"
+          className="w-px transition-all duration-150 ease-out"
           style={{ 
             height: `${localProgress * 240}px`, 
             backgroundColor: localProgress > 0.5 ? '#3758f9' : 'rgba(255,255,255,0.1)',
@@ -183,98 +183,6 @@ const PrincipleItem = memo(({
 });
 
 PrincipleItem.displayName = 'PrincipleItem';
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return (
-    <div 
-      ref={itemRef}
-      className="group relative principle-item py-20 md:py-32"
-    >
-      <div className="relative z-10">
-        <div className="flex items-center gap-6 mb-8 overflow-hidden">
-          <div className={`font-mono text-[10px] md:text-xs transition-all duration-1000 flex items-center gap-3 ${localProgress > 0.2 ? 'text-brand-accent' : 'text-gray-800'}`}>
-            <span className="opacity-50">ID:</span>
-            <span className="font-bold">0x0{idx + 1}</span>
-            <span className={`w-2 h-2 rounded-full ${localProgress > 0.2 ? 'bg-brand-accent animate-pulse' : 'bg-gray-800'}`} />
-          </div>
-          <div 
-            className="h-px grow bg-white/5 transition-all duration-1000 origin-left"
-            style={{ transform: `scaleX(${Math.max(0, (localProgress - 0.1) * 2)})`, backgroundColor: localProgress > 0.3 ? 'rgba(55,88,249,0.3)' : 'rgba(255,255,255,0.05)' }}
-          />
-        </div>
-
-        <h3 className="text-[9vw] md:text-[10vw] font-display font-black leading-[0.8] tracking-tighter uppercase cursor-default select-none relative">
-          <SplitText text={item.title} progress={localProgress} />
-        </h3>
-      </div>
-      
-      <div className="mt-20 max-w-4xl ml-auto md:mr-24 relative z-10">
-        <div className="text-2xl md:text-5xl font-light leading-[1.05] tracking-tight relative text-gray-500">
-          <p className="relative z-10">
-            {item.desc.split(' ').map((word: string, i: number) => {
-              // Description starts revealing after title
-              const wordStart = i / item.desc.split(' ').length * 0.2;
-              // Increased multiplier to 12 to ensure full reveal within the remaining scroll space
-              const wordProgress = Math.max(0, Math.min(1, (localProgress - 0.6 - wordStart) * 12));
-              
-              return (
-                <span 
-                  key={i} 
-                  className="inline-block mr-[0.25em] transition-all duration-700 ease-out will-change-transform"
-                  style={{ 
-                    transform: `translateY(${(1 - wordProgress) * 10}px)`,
-                    opacity: 0.1 + wordProgress * 0.9,
-                    // Blur disappears much faster to ensure clarity
-                    filter: wordProgress > 0.7 ? 'none' : `blur(${(1 - wordProgress) * 8}px)`,
-                    color: wordProgress > 0.5 ? 'white' : 'rgb(107, 114, 128)'
-                  }}
-                >
-                  {word}
-                </span>
-              );
-            })}
-          </p>
-        </div>
-        
-        <div 
-          className="mt-20 flex items-center justify-end transition-all duration-1000"
-          style={{ opacity: Math.max(0, (localProgress - 0.8) * 5), transform: `translateY(${(1 - Math.max(0, (localProgress - 0.8) * 5)) * 20}px)` }}
-        >
-          <div className="w-20 h-20 rounded-full border border-brand-accent/20 flex items-center justify-center overflow-hidden relative group/btn cursor-pointer">
-            <div className="absolute inset-0 bg-brand-accent translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500" />
-            <svg width="28" height="28" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 transition-all duration-700 group-hover/btn:rotate-45 group-hover/btn:scale-110">
-              <path d="M1.5 12.5L12.5 1.5M12.5 1.5H1.5M12.5 1.5V12.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-        </div>
-      </div>
-      
-      {/* Decorative index line */}
-      <div className="absolute -top-24 -left-4 md:-left-12 flex flex-col items-center gap-6">
-        <div 
-          className="w-px transition-all duration-1000 ease-out"
-          style={{ 
-            height: `${localProgress * 240}px`, 
-            backgroundColor: localProgress > 0.5 ? '#3758f9' : 'rgba(255,255,255,0.1)',
-            boxShadow: localProgress > 0.5 ? '0 0 30px rgba(55,88,249,1)' : 'none'
-          }}
-        />
-        <div className="relative">
-          <span className={`text-[10px] font-mono transition-all duration-700 font-bold tracking-tighter ${localProgress > 0.2 ? 'text-brand-accent scale-125' : 'text-gray-800 opacity-50'}`}>
-            P_{idx + 1}
-          </span>
-          {localProgress > 0.2 && (
-            <span className="absolute -inset-2 border border-brand-accent/30 rounded-sm animate-pulse" />
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
 
 export const Manifesto: React.FC = () => {
   const { t } = useLanguage();
@@ -340,9 +248,9 @@ export const Manifesto: React.FC = () => {
 
       {/* Ambient Glow & Data Stream */}
       <div 
-        className="absolute inset-0 pointer-events-none z-0 opacity-40 transition-all duration-1000 ease-in-out"
+        className="absolute inset-0 pointer-events-none z-0 opacity-40 transition-all duration-150 ease-in-out"
         style={{
-          background: `radial-gradient(800px circle at 50% ${smoothProgress * 100}%, ${principleColors[activePrinciple] || principleColors[0]}, transparent 60%)`
+          background: `radial-gradient(800px circle at 50% ${scrollProgress * 100}%, ${principleColors[activePrinciple] || principleColors[0]}, transparent 60%)`
         }}
       />
       
@@ -407,7 +315,7 @@ export const Manifesto: React.FC = () => {
           {/* Vertical Progress Line */}
           <div className="absolute left-0 top-0 w-px h-full bg-white/5 hidden md:block">
             <div 
-              className="absolute top-0 left-0 w-full bg-brand-accent transition-all duration-300 ease-out shadow-[0_0_15px_rgba(55,88,249,0.5)]"
+              className="absolute top-0 left-0 w-full bg-brand-accent transition-all duration-150 ease-out shadow-[0_0_15px_rgba(55,88,249,0.5)]"
               style={{ height: `${scrollProgress * 100}%` }}
             />
           </div>
@@ -446,7 +354,7 @@ export const Manifesto: React.FC = () => {
                       {item}
                     </span>
                   </div>
-                  <div className="absolute -bottom-2 left-0 w-0 h-px bg-brand-accent transition-all duration-500 group-hover/tech:w-full" />
+                  <div className="absolute -bottom-2 left-0 w-0 h-px bg-brand-accent transition-all duration-150 group-hover/tech:w-full" />
                 </div>
               ))}
             </div>
