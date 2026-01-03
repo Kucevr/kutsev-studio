@@ -1,7 +1,8 @@
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useTransition } from 'react';
 import { Maximize2 } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
+import { throttle } from '../utils/performance';
 
 const photo = (file: string) => new URL(`../sitephotos/${file}`, import.meta.url).href;
 
@@ -92,11 +93,14 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
   
   const [isMobile, setIsMobile] = React.useState(false);
+  const [isPending, startTransition] = useTransition();
   const progressRef = useRef(0);
   const targetProgressRef = useRef(0);
   const lastTimeRef = useRef<number>(0);
   const isVisibleRef = useRef(false);
   const isPausedRef = useRef(isPaused);
+  const isScrollingRef = useRef(false);
+  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rafIdRef = useRef<number | null>(null);
   const tiltRef = useRef({ x: 0, y: 0 });
   const targetTiltRef = useRef({ x: 0, y: 0 });
@@ -116,7 +120,9 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
   useEffect(() => {
     // Detect mobile and low-performance devices
     const mobileCheck = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-    setIsMobile(mobileCheck);
+    startTransition(() => {
+      setIsMobile(mobileCheck);
+    });
     isMobileRef.current = mobileCheck;
     isLowPerfRef.current = mobileCheck || navigator.hardwareConcurrency <= 4;
     
@@ -129,9 +135,9 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
 
   useEffect(() => {
     const loop = (time: number) => {
-      // Stop loop if paused (e.g. modal open)
-      if (isPausedRef.current) {
-        rafIdRef.current = null;
+      // Stop loop if paused (e.g. modal open) or user is scrolling
+      if (isPausedRef.current || isScrollingRef.current) {
+        rafIdRef.current = requestAnimationFrame(loop);
         return;
       }
 
@@ -223,8 +229,18 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
       { threshold: 0 }
     );
 
-    const handleScroll = () => {
+    const handleScroll = throttle(() => {
       if (sectionRef.current && isVisibleRef.current) {
+        isScrollingRef.current = true;
+        
+        if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+        scrollTimeoutRef.current = setTimeout(() => {
+          isScrollingRef.current = false;
+          if (!rafIdRef.current && isVisibleRef.current) {
+            startLoop();
+          }
+        }, 150);
+        
         const rect = sectionRef.current.getBoundingClientRect();
         const viewportHeight = window.innerHeight;
         const totalDist = rect.height - viewportHeight;
@@ -232,7 +248,7 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
         raw = Math.max(0, Math.min(1, raw));
         targetProgressRef.current = raw;
       }
-    };
+    }, 16);
 
     const handleMouseMove = (e: MouseEvent) => {
       // Disable tilt on mobile devices
@@ -266,6 +282,9 @@ export const DesignCanvas: React.FC<DesignCanvasProps> = ({ onOpenAllProjects, i
       window.removeEventListener('scroll', handleScroll);
       if (rafIdRef.current) {
         cancelAnimationFrame(rafIdRef.current);
+      }
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
       }
       window.removeEventListener('mousemove', handleMouseMove);
     };
