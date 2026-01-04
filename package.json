@@ -2,6 +2,8 @@
   "name": "kutsev-studio",
   "private": true,
   "version": "0.0.0",
+  "description": "Kutsev Studio — современное дизайн-агентство. Мы создаем будущее веба.",
+  "homepage": "https://kutsev-studio.vercel.app",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -1,5 +1,6 @@
 {
   "name": "Kutsev Studio",
   "description": "Современное дизайн-агентство, вдохновленное эстетикой Wix Studio. Мы создаем будущее веба.",
+  "url": "https://kutsev-studio.vercel.app",
   "requestFramePermissions": []
 }
