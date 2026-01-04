@@ -63,8 +63,11 @@ export const Showcase: React.FC<ShowcaseProps> = ({ onProjectClick, onOpenAllPro
                   <img 
                     src={project.imageUrl} 
                     alt={project.title} 
-                    loading="lazy"
+                    loading={index === 0 ? "eager" : "lazy"}
+                    fetchPriority={index === 0 ? "high" : "auto"}
                     decoding="async"
+                    width="1200"
+                    height="750"
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                 </div>

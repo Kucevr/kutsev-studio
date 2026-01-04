@@ -4,13 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react"
 import { Analytics } from "@vercel/analytics/react"
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
-import { DesignCanvas } from './components/DesignCanvas';
-import { Services } from './components/Services';
-import { Capabilities } from './components/Capabilities';
-import { Process } from './components/Process';
-import { Pricing } from './components/Pricing';
 import { Showcase } from './components/Showcase';
-import { Manifesto } from './components/Manifesto';
 import { Footer } from './components/Footer';
 import { ContactOverlay } from './components/ContactOverlay';
 import { Preloader } from './components/Preloader';
@@ -26,6 +20,12 @@ import { useIsMobile } from './hooks/useIsMobile';
 // Lazy load heavy components
 const ProjectDetail = React.lazy(() => import('./components/ProjectDetail').then(module => ({ default: module.ProjectDetail })));
 const AllProjects = React.lazy(() => import('./components/AllProjects').then(module => ({ default: module.AllProjects })));
+const DesignCanvas = React.lazy(() => import('./components/DesignCanvas').then(module => ({ default: module.DesignCanvas })));
+const Services = React.lazy(() => import('./components/Services').then(module => ({ default: module.Services })));
+const Capabilities = React.lazy(() => import('./components/Capabilities').then(module => ({ default: module.Capabilities })));
+const Process = React.lazy(() => import('./components/Process').then(module => ({ default: module.Process })));
+const Pricing = React.lazy(() => import('./components/Pricing').then(module => ({ default: module.Pricing })));
+const Manifesto = React.lazy(() => import('./components/Manifesto').then(module => ({ default: module.Manifesto })));
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -146,19 +146,23 @@ function App() {
           <div className={`transition-all duration-700 ${isModalOpen ? 'pointer-events-none select-none opacity-20 md:opacity-20 md:blur-md md:grayscale' : 'opacity-100'}`}>
             <main>
               <Hero onContactClick={() => setIsContactOpen(true)} />
-              <DesignCanvas 
-                onOpenAllProjects={() => setIsAllProjectsOpen(true)} 
-                isPaused={isModalOpen}
-              />
-              <Services />
-              <Capabilities />
+              <Suspense fallback={<div className="h-96 bg-brand-black" />}>
+                <DesignCanvas 
+                  onOpenAllProjects={() => setIsAllProjectsOpen(true)} 
+                  isPaused={isModalOpen}
+                />
+                <Services />
+                <Capabilities />
+              </Suspense>
               <Showcase 
                 onProjectClick={setSelectedProject} 
                 onOpenAllProjects={() => setIsAllProjectsOpen(true)}
               />
-              <Process isPaused={isModalOpen} />
-              <Pricing onContactClick={() => setIsContactOpen(true)} />
-              <Manifesto />
+              <Suspense fallback={<div className="h-96 bg-brand-black" />}>
+                <Process isPaused={isModalOpen} />
+                <Pricing onContactClick={() => setIsContactOpen(true)} />
+                <Manifesto />
+              </Suspense>
             </main>
             
             <Footer onContactClick={() => setIsContactOpen(true)} />
