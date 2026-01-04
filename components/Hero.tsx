@@ -191,11 +191,11 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
           </div>
 
           {/* Adjusted sizing for MASTERY / МАСТЕРСТВО */}
-          <h1 className="text-[12vw] md:text-[12vw] leading-[0.85] font-display font-bold tracking-tighter select-none relative z-10 whitespace-nowrap">
+          <div className="text-[12vw] md:text-[12vw] leading-[0.85] font-display font-bold tracking-tighter select-none relative z-10 whitespace-nowrap">
             <span className="text-transparent bg-clip-text bg-linear-to-br from-white via-gray-300 to-white/50 animate-gradient-x bg-[length:200%_auto]">
                <TextReveal delay={500}>{t('hero.mastery')}</TextReveal>
             </span>
-          </h1>
+          </div>
         </div>
 
         {/* Bottom Structure: Button & Mission */}

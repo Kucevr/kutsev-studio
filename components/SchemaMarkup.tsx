@@ -32,9 +32,9 @@ export const SchemaMarkup: React.FC = () => {
             "author": {
               "@type": "Organization",
               "name": "Kutsev Studio",
-              "url": "https://kutsev.studio"
+              "url": "https://kutsev-studio.vercel.app"
             },
-            "mainEntityOfPage": `https://kutsev.studio/#project-${project.id}`,
+            "mainEntityOfPage": `https://kutsev-studio.vercel.app/#project-${project.id}`,
             "abstract": project.headline,
             "keywords": project.technologies?.join(', '),
             "publisher": {
@@ -42,7 +42,7 @@ export const SchemaMarkup: React.FC = () => {
               "name": "Kutsev Studio",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://kutsev.studio/logo.png"
+                "url": "https://kutsev-studio.vercel.app/logo.png"
               }
             },
             ...(project.category.toLowerCase().includes('app') || project.category.toLowerCase().includes('platform') ? {

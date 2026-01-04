@@ -116,12 +116,12 @@ export const Footer: React.FC<FooterProps> = memo(({ onContactClick }) => {
         </div>
 
         <div className="relative border-t border-white/10 pt-10 pb-4">
-           <h1 className="hidden sm:block text-[20vw] leading-[0.75] font-display font-bold text-center tracking-tighter select-none text-transparent bg-clip-text bg-linear-to-b from-white/80 to-white/20 pointer-events-none">
+           <div className="hidden sm:block text-[20vw] leading-[0.75] font-display font-bold text-center tracking-tighter select-none text-transparent bg-clip-text bg-linear-to-b from-white/80 to-white/20 pointer-events-none">
              KUTSEV
-           </h1>
-           <h1 className="block sm:hidden text-[18vw] leading-[0.85] font-display font-bold text-center tracking-tighter select-none text-transparent bg-clip-text bg-linear-to-b from-white/70 to-white/15 pointer-events-none">
+           </div>
+           <div className="block sm:hidden text-[18vw] leading-[0.85] font-display font-bold text-center tracking-tighter select-none text-transparent bg-clip-text bg-linear-to-b from-white/70 to-white/15 pointer-events-none">
              KUTSEV
-           </h1>
+           </div>
            <div className="flex flex-col md:flex-row justify-between items-center md:items-start text-center md:text-left text-xs text-gray-500 font-mono mt-4 uppercase tracking-widest gap-4 md:gap-0">
               <span>© 2026 Kutsev Studio Inc.</span>
               <span className="hidden md:flex items-center gap-4">

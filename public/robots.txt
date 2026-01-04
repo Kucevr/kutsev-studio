@@ -1,5 +1,5 @@
 # Robots.txt for Kutsev Studio
-# https://kutsev.studio
+# https://kutsev-studio.vercel.app
 
 User-agent: *
 Allow: /
@@ -9,7 +9,7 @@ Disallow: /api/
 Disallow: /_*
 
 # Sitemap location
-Sitemap: https://kutsev.studio/sitemap.xml
+Sitemap: https://kutsev-studio.vercel.app/sitemap.xml
 
 # Crawl-delay for polite crawling
 Crawl-delay: 1
