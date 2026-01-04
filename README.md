@@ -10,7 +10,6 @@
 - Vite
 - Tailwind CSS
 - Framer Motion
-- Google Gemini API
 
 ## Развертывание
 Сайт развернут на Vercel.
