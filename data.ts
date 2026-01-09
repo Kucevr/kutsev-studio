@@ -43,7 +43,7 @@ export const allProjects: PortfolioItem[] = [
     headline: 'Элегантность в каждом пикселе — e-commerce, отражающий философию сдержанной роскоши.',
     fullDescription: 'Элегантный e-commerce для современного мужчины. Минималистичный дизайн подчеркивает качество каждого изделия. Умная корзина, список желаний и интуитивная навигация создают безупречный опыт покупок. Каждая деталь интерфейса отражает философию бренда — сдержанную роскошь.',
     technologies: ['React', 'TypeScript', 'Context API', 'Tailwind CSS'],
-    liveUrl: '#',
+    liveUrl: 'https://l-homme.vercel.app',
     duration: 5
   },
   { 
@@ -141,7 +141,7 @@ export const allProjects: PortfolioItem[] = [
     headline: 'Видео-герой, неоновые переходы и AI-тревел-консьерж — погружение в город мечты.',
     fullDescription: 'Современный гид о Нью-Йорке с двуязычным контентом, видео-хиро и карточками районов. AI-консьерж на Gemini подбирает маршруты, гастро-точки и культурные события. Lazy loading, code splitting и адаптивные анимации обеспечивают плавный опыт на всех устройствах.',
     technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Gemini AI'],
-    liveUrl: '#',
+    liveUrl: 'https://nyc-atmosphere.vercel.app',
     duration: 6
   },
   { 
@@ -281,9 +281,13 @@ export const allProjects: PortfolioItem[] = [
     headline: 'Вершина типографии — каждая буква имеет значение.',
     fullDescription: 'Передовая платформа для исследования, выбора и применения типографики в дизайне. Более 1000 шрифтов, инструменты для кастомизации, интерактивные примеры использования. Помогает дизайнерам создавать визуальную иерархию, улучшающую читаемость и эстетику интерфейсов. Полная поддержка варьируемых шрифтов и OpenType функций.',
     technologies: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
-    liveUrl: '#',
+    liveUrl: 'https://zenith-type.vercel.app',
     duration: 5
   }
 ];
 
-export const showcaseProjects = allProjects.slice(0, 3);
+export const showcaseProjects = [
+  allProjects.find(p => p.id === '20')!, // ZENITH-TYPE
+  allProjects.find(p => p.id === '3')!,  // L'HOMME
+  allProjects.find(p => p.id === '10')!  // NYC ATMOSPHERE
+];
