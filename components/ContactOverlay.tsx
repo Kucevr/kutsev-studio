@@ -120,8 +120,8 @@ export const ContactOverlay: React.FC<ContactOverlayProps> = ({ isOpen, onClose 
            <div className="hidden md:block space-y-8 relative z-10">
              <div>
                <h4 className="text-sm font-bold uppercase tracking-widest opacity-50 mb-2">{t('contact.contacts')}</h4>
-               <a href="mailto:hello@kutsev.studio" className="text-xl font-display hover:text-brand-accent transition-colors block">hello@kutsev.studio</a>
-               <a href="tel:+79000000000" className="text-xl font-display hover:text-brand-accent transition-colors block mt-1">+7 (900) 000-00-00</a>
+               <a href="mailto:kucevr@gmail.com" className="text-xl font-display hover:text-brand-accent transition-colors block">kucevr@gmail.com</a>
+               <a href="tel:+375333755020" className="text-xl font-display hover:text-brand-accent transition-colors block mt-1">+375 33 375 50 20</a>
              </div>
              <div>
                <h4 className="text-sm font-bold uppercase tracking-widest opacity-50 mb-2">{t('contact.office')}</h4>

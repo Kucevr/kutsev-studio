@@ -71,11 +71,11 @@ export const Footer: React.FC<FooterProps> = memo(({ onContactClick }) => {
                 </Magnetic>
                 <Magnetic strength={0.3}>
                   <a 
-                    href="mailto:hello@kutsev.studio"
+                    href="mailto:kucevr@gmail.com"
                     className="group w-full sm:w-auto px-8 py-4 border border-white/20 rounded-full font-bold text-sm md:text-lg text-white hover:bg-white transition-all duration-300 inline-block text-center break-all"
                   >
                     <span className="group-hover:text-black transition-colors duration-300">
-                      hello@kutsev.studio
+                      kucevr@gmail.com
                     </span>
                   </a>
                 </Magnetic>
