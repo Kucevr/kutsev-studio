@@ -1,5 +1,5 @@
 import React, { useEffect, useState, memo } from 'react';
-import { ArrowUpRight, Github, Twitter, Linkedin, Instagram, ArrowUp, Globe } from 'lucide-react';
+import { ArrowUpRight, Github, Twitter, Send, Instagram, ArrowUp, Globe } from 'lucide-react';
 import { Magnetic } from './Magnetic';
 import { useLanguage } from '../LanguageContext';
 import { TextReveal } from './TextReveal';
@@ -86,13 +86,19 @@ export const Footer: React.FC<FooterProps> = memo(({ onContactClick }) => {
              <div className="flex flex-col gap-4">
                 <span className="text-white uppercase tracking-wider mb-2">{t('footer.socials')}</span>
                 {[
-                  { name: 'Instagram', icon: Instagram },
-                  { name: 'Twitter', icon: Twitter },
-                  { name: 'LinkedIn', icon: Linkedin },
-                  { name: 'GitHub', icon: Github }
+                  { name: 'Instagram', icon: Instagram, url: '#' },
+                  { name: 'Twitter', icon: Twitter, url: '#' },
+                  { name: 'Telegram', icon: Send, url: 'https://t.me/Kucevr' },
+                  { name: 'GitHub', icon: Github, url: '#' }
                 ].map((social) => (
                   <Magnetic key={social.name} strength={0.2} className="block w-fit">
-                    <a href="#" aria-label={social.name} className="hover:text-brand-accent transition-colors flex items-center gap-2 py-2">
+                    <a 
+                      href={social.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      aria-label={social.name} 
+                      className="hover:text-brand-accent transition-colors flex items-center gap-2 py-2"
+                    >
                       <social.icon size={14}/> {social.name}
                     </a>
                   </Magnetic>
