@@ -16,6 +16,12 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://kutsev-studio.vercel.app/" />
     
+    <!-- DNS Prefetch & Preconnect for faster external resources -->
+    <link rel="dns-prefetch" href="https://vercel.live" />
+    <link rel="preconnect" href="https://vercel.live" crossorigin />
+    <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
+    <link rel="preconnect" href="https://va.vercel-scripts.com" crossorigin />
+    
     <!-- Preload Critical Fonts -->
     <link rel="preload" href="/fonts/clash-display/ClashDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/clash-display/ClashDisplay-Medium.woff2" as="font" type="font/woff2" crossorigin />
@@ -114,6 +120,6 @@
       </div>
     </noscript>
     <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
-</body>
+    <script type="module" src="/index.tsx"></script>
+  </body>
 </html>

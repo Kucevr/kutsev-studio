@@ -18,11 +18,20 @@ const SpotlightCard = memo(({ children, className = '' }: { children: React.Reac
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
   const isMobile = useIsMobile();
+  const rafRef = useRef<number | null>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!divRef.current || isMobile) return;
-    const rect = divRef.current.getBoundingClientRect();
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
+
+    rafRef.current = requestAnimationFrame(() => {
+      if (!divRef.current) return;
+      const rect = divRef.current.getBoundingClientRect();
+      setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    });
   };
 
   return (
@@ -54,13 +63,29 @@ export const Services: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const spotlightRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
+  const rectCacheRef = useRef<DOMRect | null>(null);
+  const rafRef = useRef<number | null>(null);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!sectionRef.current || !spotlightRef.current || isMobile) return;
-    const rect = sectionRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    spotlightRef.current.style.transform = `translate(${x - 400}px, ${y - 400}px)`;
+    
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
+
+    rafRef.current = requestAnimationFrame(() => {
+      if (!sectionRef.current || !spotlightRef.current) return;
+      
+      // Cache rect to avoid reflow on every mouse move
+      if (!rectCacheRef.current) {
+        rectCacheRef.current = sectionRef.current.getBoundingClientRect();
+      }
+      
+      const rect = rectCacheRef.current;
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      spotlightRef.current.style.transform = `translate(${x - 400}px, ${y - 400}px)`;
+    });
   };
 
   // Generate services from translations

@@ -50,11 +50,14 @@ export const CustomCursor = () => {
       // Check for magnetic elements
       const magneticTarget = target.closest('[data-magnetic="true"]');
       if (magneticTarget) {
-        const rect = magneticTarget.getBoundingClientRect();
-        magneticPos.current = {
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2
-        };
+        // Cache rect calculation to avoid forced reflow in animation loop
+        requestAnimationFrame(() => {
+          const rect = magneticTarget.getBoundingClientRect();
+          magneticPos.current = {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2
+          };
+        });
       } else {
         magneticPos.current = null;
       }

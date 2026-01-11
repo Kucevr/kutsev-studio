@@ -63,10 +63,17 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const requestRef = useRef<number>(0);
+  const rectCacheRef = useRef<DOMRect | null>(null);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!containerRef.current || !contentRef.current || window.innerWidth < 768) return;
-    const rect = containerRef.current.getBoundingClientRect();
+    
+    // Cache rect to avoid forced reflow
+    if (!rectCacheRef.current) {
+      rectCacheRef.current = containerRef.current.getBoundingClientRect();
+    }
+    
+    const rect = rectCacheRef.current;
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
     const xPct = mouseX / rect.width - 0.5;
