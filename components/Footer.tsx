@@ -86,9 +86,9 @@ export const Footer: React.FC<FooterProps> = memo(({ onContactClick }) => {
              <div className="flex flex-col gap-4">
                 <span className="text-white uppercase tracking-wider mb-2">{t('footer.socials')}</span>
                 {[
+                  { name: 'Telegram', icon: Send, url: 'https://t.me/Kucevr' },
                   { name: 'Instagram', icon: Instagram, url: '#' },
                   { name: 'Twitter', icon: Twitter, url: '#' },
-                  { name: 'Telegram', icon: Send, url: 'https://t.me/Kucevr' },
                   { name: 'GitHub', icon: Github, url: '#' }
                 ].map((social) => (
                   <Magnetic key={social.name} strength={0.2} className="block w-fit">
